@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       const user = await User.create({
         username,
         email,
-        password
+        hashedPassword
       });
       return await
         User.scope('currentUser').findByPk(user.id);
@@ -63,7 +63,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [4, 30],
         isNotEmail(value) {
-          if (validator.isEmail(value)) {
+          if (Validator.isEmail(value)) {
             throw new Error("Cannot be an email.")
           }
         }
