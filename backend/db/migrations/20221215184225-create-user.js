@@ -3,7 +3,7 @@
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.schema
-  ///defines chema in options object
+  ///defines schema in options object
 }
 
 
@@ -43,6 +43,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    options.tableName = "Users";
+    await queryInterface.dropTable(options);
   }
 };
