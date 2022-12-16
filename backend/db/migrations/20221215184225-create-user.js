@@ -1,8 +1,9 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
-  options.schema = process.env.schema
+  options.schema = process.env.SCHEMA;
   ///defines schema in options object
 }
 
@@ -48,7 +49,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    }, options);
   },
   async down(queryInterface, Sequelize) {
     options.tableName = "Users";
