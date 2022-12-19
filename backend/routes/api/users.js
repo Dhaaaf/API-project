@@ -1,5 +1,6 @@
 // backend/routes/api/users.js
 const express = require('express');
+const router = express.Router();
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
@@ -7,7 +8,6 @@ const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const router = express.Router();
 
 
 const validateSignup = [
@@ -28,10 +28,10 @@ const validateSignup = [
         .isLength({ min: 6 })
         .withMessage('Password must be 6 characters or more.'),
     check('firstName')
-        .exists({ checlFalsey: true })
+        .exists({ checkFalsey: true })
         .withMessage('Must provide a firstName'),
     check('lastName')
-        .exists({ checlFalsey: true })
+        .exists({ checkFalsey: true })
         .withMessage('Must provide a lastName'),
     handleValidationErrors
 ];
