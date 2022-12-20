@@ -362,4 +362,6 @@ router.post('/:spotId/images', requireAuth, validateSpotImage, async (req, res, 
 
 
 
+
+
 module.exports = router;
