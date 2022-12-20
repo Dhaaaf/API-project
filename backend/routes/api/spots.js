@@ -43,16 +43,6 @@ const validateSpot = [
     handleValidationErrors
 ];
 
-const validateReview = [
-    check('review')
-        .notEmpty()
-        .withMessage('Review text is required'),
-    check('stars')
-        .notEmpty()
-        .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5'),
-    handleValidationErrors
-];
 
 const validateBooking = [
     check('startDate')
@@ -420,6 +410,49 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         statusCode: 200
     })
 
+})
+
+
+/// Get all Reviews by a Spot's id
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const { spotId } = req.params;
+
+    const spot = await Spot.findByPk(spotId);
+
+    const err = {};
+    if (!spot) {
+        err.title = "Spot couldn't be found"
+        err.status = 404;
+        err.message = "Spot couldn't be found";
+        return next(err);
+    }
+
+    const reviews = await spot.getReviews({
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ]
+    });
+
+    let reviewsArr = [];
+    reviews.forEach(review => {
+        reviewsArr.push(review.toJSON())
+    })
+
+    if (!reviewsArr.length) {
+        return res.json("No reviews for this spot")
+    }
+
+
+    res.json({
+        Reviews: reviewsArr
+    });
 })
 
 
