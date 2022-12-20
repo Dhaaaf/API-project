@@ -66,6 +66,17 @@ const validateBooking = [
     handleValidationErrors
 ];
 
+const validateSpotImage = [
+    check('url')
+        .notEmpty()
+        .withMessage('url must be defined'),
+    check('preview')
+        .notEmpty()
+        .isBoolean()
+        .withMessage('preview must be a boolean value'),
+    handleValidationErrors
+];
+
 // Get all spots
 router.get('/', async (req, res, next) => {
 
@@ -304,6 +315,42 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
 })
 
 /// Add spotimage to spotId
+
+router.post('/:spotId/images', requireAuth, validateSpotImage, async (req, res, next) => {
+    let { spotId } = req.params;
+    let { url, preview } = req.body;
+
+    const user = req.user;
+
+    const spot = await Spot.findByPk(spotId);
+
+    if (!spot) {
+        let err = {};
+        err.title = "Spot couldn't be found"
+        err.status = 404;
+        err.message = "Spot couldn't be found";
+        return next(err);
+    }
+
+    if (user.id !== spot.ownerId) {
+        let err = {};
+        err.title = "Authorization error";
+        err.status = 401;
+        err.message = "Spot doesn't belong to current user";
+        return next(err);
+    }
+
+    let spotImage = await spot.createSpotImage({
+        url: url,
+        preview: preview
+    })
+
+    res.json({
+        id: spotImage.id,
+        url: spotImage.url,
+        preview: spotImage.preview
+    });
+})
 
 
 
