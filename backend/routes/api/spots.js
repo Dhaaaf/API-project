@@ -66,7 +66,7 @@ const validateBookings = [
     handleValidationErrors
 ];
 
-//get all spots
+// Get all spots
 router.get('/', async (req, res, next) => {
 
     let spots = await Spot.findAll({
@@ -122,6 +122,13 @@ router.get('/', async (req, res, next) => {
 
 
     res.json({ Spots: spotsArr });
+})
+
+// Get all spots owned by Current User
+router.get('/current', requireAuth, async (req, res, next) => {
+
+
+
 })
 
 
