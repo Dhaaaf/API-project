@@ -9,7 +9,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const sequelize = require('sequelize');
 
 
-const validateSpots = [
+const validateSpot = [
     check('address')
         .notEmpty()
         .withMessage('Street address is required'),
@@ -43,7 +43,7 @@ const validateSpots = [
     handleValidationErrors
 ];
 
-const validateReviews = [
+const validateReview = [
     check('review')
         .notEmpty()
         .withMessage('Review text is required'),
@@ -54,7 +54,7 @@ const validateReviews = [
     handleValidationErrors
 ];
 
-const validateBookings = [
+const validateBooking = [
     check('startDate')
         .notEmpty()
         .isDate()
@@ -111,11 +111,19 @@ router.get('/', async (req, res, next) => {
             avgRating: avg
         }
 
-        if (spot.SpotImages[0].dataValues.url) {
-            eachSpot.previewImage = spot.SpotImages[0].dataValues.url
+        // console.log(spot)
+        // console.log(spot.SpotImages)
+
+        if (spot.SpotImages.length > 0) {
+            if (spot.SpotImages[0].dataValues.url) {
+                eachSpot.previewImage = spot.SpotImages[0].dataValues.url
+            } else {
+                eachSpot.previewImage = "No current image listed"
+            }
         } else {
             eachSpot.previewImage = "No current image listed"
         }
+
 
         spotsArr.push(eachSpot);
     })
@@ -126,10 +134,165 @@ router.get('/', async (req, res, next) => {
 
 // Get all spots owned by Current User
 router.get('/current', requireAuth, async (req, res, next) => {
+    let user = req.user;
+
+    let spots = await user.getSpots({
+        include: [
+            {
+                model: Review,
+                attributes: ['stars']
+            },
+            {
+                model: SpotImage,
+                attributes: ['url']
+            }
+        ]
+    })
+
+    // let spots = await Spot.findAll({
+    //     where: {
+    //         ownerId: user.id
+    //     },
+    //     include: [{
+    //         model: Review,
+    //         attributes: ['stars']
+    //     }, {
+    //         model: SpotImage,
+    //         attributes: ['url']
+    //     }]
+    // })
+
+    let ownedSpots = [];
 
 
+
+    // spots.forEach(async spot => {
+    //     let sum = await Review.sum('stars',
+    //         {
+    //             where: {
+    //                 spotId: spot.id
+    //             }
+    //         });
+    //     let count = await Review.count({
+    //         where: {
+    //             spotId: spot.id
+    //         }
+    //     });
+    //     let avg = sum / count
+
+    //     if (!avg) {
+    //         // eachSpot.avgRating = "No current ratings"
+    //         avg = "No current ratings"
+    //     };
+    //     let eachSpot = {
+    //         id: spot.id,
+    //         ownerId: spot.ownerId,
+    //         address: spot.address,
+    //         city: spot.city,
+    //         state: spot.state,
+    //         country: spot.country,
+    //         lat: spot.lat,
+    //         lng: spot.lng,
+    //         name: spot.name,
+    //         description: spot.description,
+    //         price: spot.price,
+    //         createdAt: spot.createdAt,
+    //         updatedAt: spot.updatedAt,
+    //         avgRating: avg,
+    //         // previewImage: spot.SpotImages[0].dataValues.url
+    //     }
+
+    spots.forEach(spot => {
+        let count = spot.Reviews.length;
+        let sum = 0;
+        spot.Reviews.forEach((review) => sum += review.stars)
+        let avg = sum / count;
+        if (!avg) {
+            // eachSpot.avgRating = "No current ratings"
+            avg = "No current ratings"
+        };
+
+        let eachSpot = {
+            id: spot.id,
+            ownerId: spot.ownerId,
+            address: spot.address,
+            city: spot.city,
+            state: spot.state,
+            country: spot.country,
+            lat: spot.lat,
+            lng: spot.lng,
+            name: spot.name,
+            description: spot.description,
+            price: spot.price,
+            createdAt: spot.createdAt,
+            updatedAt: spot.updatedAt,
+            avgRating: avg
+        }
+
+        if (spot.SpotImages.length > 0) {
+            if (spot.SpotImages[0].dataValues.url) {
+                eachSpot.previewImage = spot.SpotImages[0].dataValues.url
+            } else {
+                eachSpot.previewImage = "No current image listed"
+            }
+        } else {
+            eachSpot.previewImage = "No current image listed"
+        }
+
+        ownedSpots.push(eachSpot);
+    })
+
+
+    if (ownedSpots.length === 0) {
+        res.json("Sorry, you don't own any spots")
+    }
+
+    res.json({
+        Spots: ownedSpots
+    })
+})
+
+
+// Get spot by spotId
+router.get('/:spotId', async (req, res, next) => {
 
 })
+
+
+
+
+/// Create a spot
+router.post('/', requireAuth, validateSpot, async (req, res, next) => {
+    let user = req.user;
+
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+    let newSpot = await Spot.create({
+        ownerId: user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+
+    return res.json(newSpot)
+})
+
+/// Add spotimage to spotId
+
+
+
+
+
+
+
+
+
 
 
 module.exports = router;
