@@ -170,7 +170,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
         spot.Reviews.forEach((review) => sum += review.stars)
         let avg = sum / count;
         if (!avg) {
-            // eachSpot.avgRating = "No current ratings"
             avg = "No current ratings"
         };
 
@@ -246,6 +245,8 @@ router.get('/:spotId', async (req, res, next) => {
 
     if (sum / count) {
         spot.avgStarRating = sum / count;
+    } else {
+        spot.avgStarRating = "No current ratings";
     }
 
     let spotImages = await SpotImage.findAll({
@@ -257,6 +258,8 @@ router.get('/:spotId', async (req, res, next) => {
 
     if (spotImages.length > 0) {
         spot.SpotImages = spotImages;
+    } else {
+        spot.SpotImages = "No images listed"
     }
 
     // let owner = await User.findByPk(spot.ownerId);
