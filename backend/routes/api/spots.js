@@ -259,6 +259,19 @@ router.get('/:spotId', async (req, res, next) => {
         spot.SpotImages = spotImages;
     }
 
+    // let owner = await User.findByPk(spot.ownerId);
+    // console.log(owner.toJSON());
+
+    // spot.Owner = {
+    //     id: owner.id,
+    //     firstName: owner.firstName,
+    //     lastName: owner.lastName
+    // }
+
+    spot.Owner = await User.findByPk(spot.ownerId, {
+        attributes: ['id', 'firstName', 'lastName']
+    })
+
     return res.json(spot)
 })
 
