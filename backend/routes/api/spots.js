@@ -164,44 +164,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
     let ownedSpots = [];
 
-
-
-    // spots.forEach(async spot => {
-    //     let sum = await Review.sum('stars',
-    //         {
-    //             where: {
-    //                 spotId: spot.id
-    //             }
-    //         });
-    //     let count = await Review.count({
-    //         where: {
-    //             spotId: spot.id
-    //         }
-    //     });
-    //     let avg = sum / count
-
-    //     if (!avg) {
-    //         // eachSpot.avgRating = "No current ratings"
-    //         avg = "No current ratings"
-    //     };
-    //     let eachSpot = {
-    //         id: spot.id,
-    //         ownerId: spot.ownerId,
-    //         address: spot.address,
-    //         city: spot.city,
-    //         state: spot.state,
-    //         country: spot.country,
-    //         lat: spot.lat,
-    //         lng: spot.lng,
-    //         name: spot.name,
-    //         description: spot.description,
-    //         price: spot.price,
-    //         createdAt: spot.createdAt,
-    //         updatedAt: spot.updatedAt,
-    //         avgRating: avg,
-    //         // previewImage: spot.SpotImages[0].dataValues.url
-    //     }
-
     spots.forEach(spot => {
         let count = spot.Reviews.length;
         let sum = 0;
@@ -255,7 +217,49 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 // Get spot by spotId
 router.get('/:spotId', async (req, res, next) => {
+    let { spotId } = req.params;
 
+    let spot = await Spot.findByPk(spotId);
+    if (!spot) {
+        let err = {};
+        err.title = "Not found"
+        err.response = "Couldn't find a Spot with the specified id"
+        err.status = 404;
+        err.message = "Spot couldn't be found";
+        return next(err);
+    }
+
+    spot = spot.toJSON();
+
+    let count = await Review.count({
+        where: {
+            spotId: spotId
+        }
+    })
+    spot.numReviews = count;
+
+    let sum = await Review.sum('stars', {
+        where: {
+            spotId: spotId
+        }
+    })
+
+    if (sum / count) {
+        spot.avgStarRating = sum / count;
+    }
+
+    let spotImages = await SpotImage.findAll({
+        where: {
+            spotId: spotId
+        },
+        attributes: ['id', 'url', 'preview']
+    })
+
+    if (spotImages.length > 0) {
+        spot.SpotImages = spotImages;
+    }
+
+    return res.json(spot)
 })
 
 
