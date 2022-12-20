@@ -43,6 +43,17 @@ const validateSpot = [
     handleValidationErrors
 ];
 
+const validateReview = [
+    check('review')
+        .notEmpty()
+        .withMessage('Review text is required'),
+    check('stars')
+        .notEmpty()
+        .isInt({ min: 1, max: 5 })
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+];
+
 
 const validateBooking = [
     check('startDate')
@@ -78,7 +89,7 @@ router.get('/', async (req, res, next) => {
             },
             {
                 model: SpotImage,
-                attributes: ['url']
+                attributes: ['url', 'preview']
             }
         ]
     })
@@ -86,48 +97,76 @@ router.get('/', async (req, res, next) => {
     let spotsArr = [];
 
     spots.forEach(spot => {
+        // let count = spot.Reviews.length;
+        // let sum = 0;
+        // spot.Reviews.forEach((review) => sum += review.stars)
+        // let avg = sum / count;
+        // if (!avg) {
+        //     // eachSpot.avgRating = "No current ratings"
+        //     avg = "No current ratings"
+        // };
+
+        // let eachSpot = {
+        //     id: spot.id,
+        //     ownerId: spot.ownerId,
+        //     address: spot.address,
+        //     city: spot.city,
+        //     state: spot.state,
+        //     country: spot.country,
+        //     lat: spot.lat,
+        //     lng: spot.lng,
+        //     name: spot.name,
+        //     description: spot.description,
+        //     price: spot.price,
+        //     createdAt: spot.createdAt,
+        //     updatedAt: spot.updatedAt,
+        //     avgRating: avg
+        // }
+
+        // // console.log(spot)
+        // // console.log(spot.SpotImages)
+
+        // if (spot.SpotImages.length > 0) {
+        //     if (spot.SpotImages[0].dataValues.url) {
+        //         eachSpot.previewImage = spot.SpotImages[0].dataValues.url
+        //     } else {
+        //         eachSpot.previewImage = "No current image listed"
+        //     }
+        // } else {
+        //     eachSpot.previewImage = "No current image listed"
+        // }
+        let eachSpot = spot.toJSON();
+
         let count = spot.Reviews.length;
         let sum = 0;
         spot.Reviews.forEach((review) => sum += review.stars)
         let avg = sum / count;
         if (!avg) {
-            // eachSpot.avgRating = "No current ratings"
             avg = "No current ratings"
         };
 
-        let eachSpot = {
-            id: spot.id,
-            ownerId: spot.ownerId,
-            address: spot.address,
-            city: spot.city,
-            state: spot.state,
-            country: spot.country,
-            lat: spot.lat,
-            lng: spot.lng,
-            name: spot.name,
-            description: spot.description,
-            price: spot.price,
-            createdAt: spot.createdAt,
-            updatedAt: spot.updatedAt,
-            avgRating: avg
-        }
+        eachSpot.avgRating = avg;
 
-        // console.log(spot)
-        // console.log(spot.SpotImages)
-
-        if (spot.SpotImages.length > 0) {
-            if (spot.SpotImages[0].dataValues.url) {
-                eachSpot.previewImage = spot.SpotImages[0].dataValues.url
-            } else {
-                eachSpot.previewImage = "No current image listed"
+        if (eachSpot.SpotImages.length > 0) {
+            for (let i = 0; i < eachSpot.SpotImages.length; i++) {
+                if (eachSpot.SpotImages[i].preview === true) {
+                    eachSpot.previewImage = eachSpot.SpotImages[i].url;
+                }
             }
-        } else {
-            eachSpot.previewImage = "No current image listed"
         }
 
+        if (!eachSpot.previewImage) {
+            eachSpot.previewImage = "No preview image available";
+        }
 
+        delete eachSpot.Reviews;
+        delete eachSpot.SpotImages
         spotsArr.push(eachSpot);
     })
+
+    if (spotsArr.length === 0) {
+        res.json("Sorry, no current spots")
+    }
 
 
     res.json({ Spots: spotsArr });
@@ -145,7 +184,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             },
             {
                 model: SpotImage,
-                attributes: ['url']
+                attributes: ['url', 'preview']
             }
         ]
     })
@@ -166,6 +205,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
     let ownedSpots = [];
 
     spots.forEach(spot => {
+        let eachSpot = spot.toJSON();
+
         let count = spot.Reviews.length;
         let sum = 0;
         spot.Reviews.forEach((review) => sum += review.stars)
@@ -174,33 +215,56 @@ router.get('/current', requireAuth, async (req, res, next) => {
             avg = "No current ratings"
         };
 
-        let eachSpot = {
-            id: spot.id,
-            ownerId: spot.ownerId,
-            address: spot.address,
-            city: spot.city,
-            state: spot.state,
-            country: spot.country,
-            lat: spot.lat,
-            lng: spot.lng,
-            name: spot.name,
-            description: spot.description,
-            price: spot.price,
-            createdAt: spot.createdAt,
-            updatedAt: spot.updatedAt,
-            avgRating: avg
-        }
+        eachSpot.avgRating = avg;
 
-        if (spot.SpotImages.length > 0) {
-            if (spot.SpotImages[0].dataValues.url) {
-                eachSpot.previewImage = spot.SpotImages[0].dataValues.url
-            } else {
-                eachSpot.previewImage = "No current image listed"
+        // let eachSpot = {
+        //     id: spot.id,
+        //     ownerId: spot.ownerId,
+        //     address: spot.address,
+        //     city: spot.city,
+        //     state: spot.state,
+        //     country: spot.country,
+        //     lat: spot.lat,
+        //     lng: spot.lng,
+        //     name: spot.name,
+        //     description: spot.description,
+        //     price: spot.price,
+        //     createdAt: spot.createdAt,
+        //     updatedAt: spot.updatedAt,
+        //     avgRating: avg
+        // }
+
+        // if (spot.SpotImages.length > 0) {
+        //     if (spot.SpotImages[0].dataValues.url) {
+        //         eachSpot.previewImage = spot.SpotImages[0].dataValues.url
+        //     } else {
+        //         eachSpot.previewImage = "No current image listed"
+        //     }
+        // } else {
+        //     eachSpot.previewImage = "No current image listed"
+        // }
+
+        if (eachSpot.SpotImages.length > 0) {
+            for (let i = 0; i < eachSpot.SpotImages.length; i++) {
+                if (eachSpot.SpotImages[i].preview === true) {
+                    eachSpot.previewImage = eachSpot.SpotImages[i].url;
+                }
             }
-        } else {
-            eachSpot.previewImage = "No current image listed"
         }
 
+        if (!eachSpot.previewImage) {
+            eachSpot.previewImage = "No preview image available";
+        }
+
+        if (!eachSpot.Reviews.length > 0) {
+            eachSpot.Reviews = "No current reviews"
+        }
+
+        if (!eachSpot.SpotImages.length > 0) {
+            eachSpot.SpotImages = "No current SpotImages"
+        }
+
+        delete eachSpot.SpotImages
         ownedSpots.push(eachSpot);
     })
 
@@ -421,7 +485,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
     const err = {};
     if (!spot) {
-        err.title = "Spot couldn't be found"
+        err.title = "Couldn't find a Spot with the specified id"
         err.status = 404;
         err.message = "Spot couldn't be found";
         return next(err);
@@ -453,6 +517,21 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     res.json({
         Reviews: reviewsArr
     });
+})
+
+// Create a Review for a spot based on the Spot's id
+router.post(':spotId/reviews', requireAuth, validateReview, async (req, res, next) => {
+    const { spotId } = req.params;
+
+    const spot = await Spot.findByPk(spotId);
+
+    const err = {};
+    if (!spot) {
+        err.title = "Couldn't find a Spot with the specified id"
+        err.status = 404;
+        err.message = "Spot couldn't be found";
+        return next(err);
+    }
 })
 
 

@@ -54,20 +54,21 @@ router.get('/current', requireAuth, async (req, res, next) => {
     let reviewArr = [];
     reviews.forEach(review => {
         let eachReview = review.toJSON();
-        console.log(eachReview.Spot.SpotImages)
+        // console.log(eachReview.Spot.SpotImages)
         if (eachReview.Spot.SpotImages.length > 0) {
             for (let i = 0; i < eachReview.Spot.SpotImages.length; i++) {
                 if (eachReview.Spot.SpotImages[i].preview === true) {
-                    eachReview.Spot.previewImage = eachReview.Spot.SpotImages[i];
+                    eachReview.Spot.previewImage = eachReview.Spot.SpotImages[i].url;
                 }
             }
         }
 
         if (!eachReview.Spot.previewImage) {
             eachReview.Spot.previewImage = "No preview image available";
-            delete eachReview.Spot.SpotImages
-            reviewArr.push(eachReview);
         }
+
+        delete eachReview.Spot.SpotImages
+        reviewArr.push(eachReview);
     })
 
     res.json({
