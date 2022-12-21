@@ -36,8 +36,10 @@ router.get("/current", requireAuth, async (req, res, next) => {
         }]
     });
 
-    if (!bookings) {
-        return res.json("No bookings for current user")
+    if (!bookings.length > 0) {
+        return res.json({
+            message: "No bookings for current spot"
+        })
     }
 
     const bookingsArr = [];
