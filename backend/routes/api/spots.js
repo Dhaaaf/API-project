@@ -389,7 +389,7 @@ router.post('/:spotId/images', requireAuth, validateSpotImage, async (req, res, 
 
     if (user.id !== spot.ownerId) {
         err.title = "Authorization error";
-        err.status = 401;
+        err.status = 403;
         err.message = "Spot doesn't belong to current user";
         return next(err);
     }
@@ -557,7 +557,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     if (spot.ownerId === user.id) {
         err.title = "User cannot leave review for own spot";
         err.status = 403;
-        err.message = "This spot is owned by current the user";
+        err.message = "This spot is owned by the current user";
         return next(err)
     }
 

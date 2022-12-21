@@ -114,7 +114,7 @@ router.post("/:reviewId/images", requireAuth, validateReviewImage, async (req, r
 
     let allReviewImages = await review.getReviewImages()
 
-    console.log(allReviewImages.length)
+    // console.log(allReviewImages.length)
 
     if (allReviewImages.length >= 10) {
         err.title = "Cannot add any more images because there is a maximum of 10 images per resource";
@@ -127,7 +127,71 @@ router.post("/:reviewId/images", requireAuth, validateReviewImage, async (req, r
         url: url
     });
 
-    res.json(newReviewImage)
+    res.json({
+        id: newReviewImage.id,
+        url: newReviewImage.url
+    })
+})
+
+/// Edit a Review
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
+    const { reviewId } = req.params;
+    const { review, stars } = req.body;
+    const user = req.user;
+
+    let editReview = await Review.findByPk(reviewId);
+
+    const err = {};
+    if (!editReview) {
+        err.title = "Couldn't find a review with the specified id";
+        err.message = "Review couldn't be found";
+        err.status = 404;
+        return next(err)
+    }
+
+    if (editReview.userId !== user.id) {
+        err.title = "User cannot edit review they didn't leave";
+        err.status = 403;
+        err.message = "This review doesn't belong to the current user";
+        return next(err)
+    }
+
+    editReview.review = review;
+    editReview.stars = stars;
+
+    await editReview.save();
+
+    return res.json(editReview);
+})
+
+/// Delete a review
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+    const { reviewId } = req.params;
+    const user = req.user;
+
+    let review = await Review.findByPk(reviewId);
+
+    const err = {};
+    if (!review) {
+        err.title = "Couldn't find a review with the specified id";
+        err.message = "Review couldn't be found";
+        err.status = 404;
+        return next(err)
+    }
+
+    if (review.userId !== user.id) {
+        err.title = "User cannot delete review they didn't leave";
+        err.status = 403;
+        err.message = "This review doesn't belong to the current user";
+        return next(err)
+    };
+
+    review.destroy();
+
+    return res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
 })
 
 
