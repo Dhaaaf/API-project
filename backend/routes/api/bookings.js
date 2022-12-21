@@ -76,6 +76,102 @@ router.get("/current", requireAuth, async (req, res, next) => {
     })
 })
 
+const convertDate = (date) => {
+    const [year, month, day] = date.split("-");
+    const monthIndex = month - 1;
+    const newDate = new Date(year, monthIndex, day)
+    return newDate;
+}
+
+// Edit a Booking
+router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) => {
+    const { bookingId } = req.params;
+    const user = req.user;
+    let { startDate, endDate } = req.body;
+    startDate = convertDate(startDate);
+    endDate = convertDate(endDate);
+
+    let bookingToEdit = await Booking.findByPk(bookingId);
+
+    let err = {};
+    if (!bookingToEdit) {
+        err.title = "Couldn't find a booking with the specific id"
+        err.status = 404;
+        err.message = "Booking couldn't be found";
+        return next(err)
+    }
+    // booking = booking.toJSON();
+    bookingStartDate = convertDate(bookingToEdit.startDate);
+    bookingEndDate = convertDate(bookingToEdit.endDate);
+    const spotId = bookingToEdit.spotId;
+
+    if (bookingEndDate.getTime() < new Date()) {
+        err.title = "Can't edit a booking that's past the end date";
+        err.status = 403;
+        err.message = "Past bookings can't be modified";
+        return next(err);
+    };
+
+    if (endDate <= startDate) {
+        err.title = "Validation error";
+        err.statusCode = 400;
+        err.message = "endDate cannot be on or before startDate";
+        return next(err);
+    };
+
+    if (user.id !== bookingToEdit.userId) {
+        err.title = "Authorization error";
+        err.status = 403;
+        err.message = "Booking doesn't belong to current user";
+        return next(err);
+    }
+
+    const spot = await Spot.findByPk(spotId);
+
+    const bookings = await spot.getBookings();
+
+    bookings.forEach(booking => {
+        if (booking.id !== bookingToEdit.id) {
+
+
+            booking = booking.toJSON();
+            err.title = "Booking Conflict";
+            err.statusCode = 403;
+            err.message = "Sorry, this spot is already booked for the specified dates";
+
+            bookedStartDate = convertDate(booking.startDate);
+            bookedEndDate = convertDate(booking.endDate);
+
+            if ((bookedStartDate <= startDate) && bookedEndDate >= startDate) {
+                err.errors = [
+                    { startDate: "Start date conflicts with an existing booking" }
+                ]
+                return next(err);
+            } else if (((bookedStartDate <= endDate) && (endDate <= bookedEndDate))) {
+                err.errors = [
+                    { endDate: "End date conflicts with an existing booking" }
+                ]
+                return next(err);
+            } else if ((bookedStartDate >= startDate) && (bookedEndDate <= endDate)) {
+                err.errors = [
+                    { startDate: "Start date conflicts with an existing booking" },
+                    { endDate: "End date conflicts with an existing booking" }
+                ]
+                return next(err);
+            }
+        }
+
+
+    });
+
+    if (!err.errors) {
+        bookingToEdit.startDate = startDate;
+        bookingToEdit.endDate = endDate;
+        bookingToEdit.save();
+        res.json(bookingToEdit)
+    }
+})
+
 
 
 

@@ -22,12 +22,14 @@ const validateSpot = [
     check('country')
         .notEmpty()
         .withMessage('Country is required'),
-    check('lat')
+    check('lat', "Latitude is not valid")
         .notEmpty()
+        .bail()
         .isDecimal()
         .withMessage('Latitude is not valid'),
-    check('lng')
+    check('lng', "Longitude is not valid")
         .notEmpty()
+        .bail()
         .isDecimal()
         .withMessage('Longitude is not valid'),
     check('name')
@@ -685,24 +687,20 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
         bookedEndDate = convertDate(booking.endDate);
 
         if ((bookedStartDate <= startDate) && bookedEndDate >= startDate) {
-            err.errors = {
-                startDate: "Start date conflicts with an existing booking"
-            }
+            err.errors = [
+                { startDate: "Start date conflicts with an existing booking" }
+            ]
             return next(err);
-        }
-
-        if (((booking.startDate <= endDate) && (endDate <= booking.endDate))) {
-            err.errors = {
-                endDate: "End date conflicts with an existing booking"
-            }
+        } else if (((bookedStartDate <= endDate) && (endDate <= bookedEndDate))) {
+            err.errors = [
+                { endDate: "End date conflicts with an existing booking" }
+            ]
             return next(err);
-        }
-
-        if ((booking.startDate >= startDate) && (booking.endDate <= endDate)) {
-            err.errors = {
-                startDate: "Start date conflicts with an existing booking",
-                endDate: "End date conflicts with an existing booking"
-            }
+        } else if ((bookedStartDate >= startDate) && (bookedEndDate <= endDate)) {
+            err.errors = [
+                { startDate: "Start date conflicts with an existing booking" },
+                { endDate: "End date conflicts with an existing booking" }
+            ]
             return next(err);
         }
 
@@ -717,7 +715,6 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
         })
         return res.json(newBooking)
     }
-
 })
 
 
