@@ -379,8 +379,8 @@ router.post('/:spotId/images', requireAuth, validateSpotImage, async (req, res, 
 
     const spot = await Spot.findByPk(spotId);
 
+    let err = {};
     if (!spot) {
-        let err = {};
         err.title = "Spot couldn't be found"
         err.status = 404;
         err.message = "Spot couldn't be found";
@@ -388,7 +388,6 @@ router.post('/:spotId/images', requireAuth, validateSpotImage, async (req, res, 
     }
 
     if (user.id !== spot.ownerId) {
-        let err = {};
         err.title = "Authorization error";
         err.status = 401;
         err.message = "Spot doesn't belong to current user";
@@ -426,11 +425,10 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 
     if (user.id !== spot.ownerId) {
         err.title = "Authorization error";
-        err.status = 401;
+        err.status = 403;
         err.message = "Spot doesn't belong to current user";
         return next(err);
     }
-
 
     spot.address = address;
     spot.city = city;
@@ -464,7 +462,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 
     if (user.id !== spot.ownerId) {
         err.title = "Authorization error";
-        err.status = 401;
+        err.status = 403;
         err.message = "Spot doesn't belong to current user";
         return next(err);
     }
