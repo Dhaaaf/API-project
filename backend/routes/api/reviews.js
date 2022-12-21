@@ -20,6 +20,15 @@ const validateReview = [
     handleValidationErrors
 ];
 
+const validateReviewImage = [
+    check('url')
+        .notEmpty()
+        .withMessage('url must be defined'),
+    handleValidationErrors
+];
+
+
+// Get reviews of current user
 router.get('/current', requireAuth, async (req, res, next) => {
     const userId = req.user.id;
 
@@ -78,6 +87,47 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json({
         Reviews: reviewArr
     });
+})
+
+// Add an Image to a Review based on the Review's id
+router.post("/:reviewId/images", requireAuth, validateReviewImage, async (req, res, next) => {
+    const { reviewId } = req.params;
+    const { url } = req.body;
+    const user = req.user
+
+    const review = await Review.findByPk(reviewId)
+
+    const err = {}
+    if (!review) {
+        err.title = "Couldn't find a Review with the specified id";
+        err.message = "Review couldn't be found";
+        err.status = 401;
+        return next(err)
+    };
+
+    if (review.userId !== user.id) {
+        err.title = "Authorization error";
+        err.status = 403;
+        err.message = "Review doesn't belong to current user";
+        return next(err);
+    }
+
+    let allReviewImages = await review.getReviewImages()
+
+    console.log(allReviewImages.length)
+
+    if (allReviewImages.length >= 10) {
+        err.title = "Cannot add any more images because there is a maximum of 10 images per resource";
+        err.message = "Maximum number of images for this resource was reached";
+        err.status = 403;
+        return next(err)
+    };
+
+    const newReviewImage = await review.createReviewImage({
+        url: url
+    });
+
+    res.json(newReviewImage)
 })
 
 
