@@ -365,6 +365,7 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
         price
     })
 
+    res.status = 201;
     return res.json(newSpot)
 })
 
@@ -506,7 +507,13 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
     let reviewsArr = [];
     reviews.forEach(review => {
-        reviewsArr.push(review.toJSON())
+        let eachReview = review.toJSON();
+
+        if (!eachReview.ReviewImages.length > 0) {
+            eachReview.ReviewImages = "No current review images available"
+        }
+
+        reviewsArr.push(eachReview);
     })
 
     if (!reviewsArr.length) {
@@ -520,9 +527,11 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 })
 
 // Create a Review for a spot based on the Spot's id
-router.post(':spotId/reviews', requireAuth, validateReview, async (req, res, next) => {
+router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, next) => {
     const { spotId } = req.params;
+    const { review, stars } = req.body
 
+    const user = req.user;
     const spot = await Spot.findByPk(spotId);
 
     const err = {};
@@ -532,6 +541,37 @@ router.post(':spotId/reviews', requireAuth, validateReview, async (req, res, nex
         err.message = "Spot couldn't be found";
         return next(err);
     }
+
+    let existingReview = await Review.findOne({
+        where: {
+            spotId: spotId,
+            userId: user.id
+        }
+    })
+
+    if (existingReview) {
+        err.title = "Review from the current user already exists for the Spot";
+        err.status = 403;
+        err.message = "User already has a review for this spot";
+        return next(err)
+    }
+
+    if (spot.ownerId === user.id) {
+        err.title = "User cannot leave review for own spot";
+        err.status = 403;
+        err.message = "This spot is owned by current the user";
+        return next(err)
+    }
+
+
+    const newReview = await spot.createReview({
+        userId: user.id,
+        review: review,
+        stars: stars
+    })
+
+    res.status = 201;
+    res.json(newReview)
 })
 
 
