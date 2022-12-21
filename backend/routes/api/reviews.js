@@ -67,6 +67,10 @@ router.get('/current', requireAuth, async (req, res, next) => {
             eachReview.Spot.previewImage = "No preview image available";
         }
 
+        if (!eachReview.ReviewImages.length > 0) {
+            eachReview.ReviewImages = "No current review images available"
+        }
+
         delete eachReview.Spot.SpotImages
         reviewArr.push(eachReview);
     })
