@@ -340,7 +340,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
             eachSpot.SpotImages = "No current SpotImages"
         }
 
-        delete eachSpot.SpotImages
+        delete eachSpot.SpotImages;
+        delete eachSpot.Reviews;
         ownedSpots.push(eachSpot);
     })
 
