@@ -8,6 +8,8 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const sequelize = require('sequelize');
 
+const { Op } = require('sequelize');
+
 
 const validateSpot = [
     check('address')
@@ -80,10 +82,63 @@ const validateSpotImage = [
     handleValidationErrors
 ];
 
-// Get all spots
-router.get('/', async (req, res, next) => {
+const validateQuery = [
+    check("page")
+        .optional({ nullable: true })
+        .isInt({ min: 1 })
+        .withMessage("Page must be greater than or equal to 1"),
+    check("size")
+        .optional({ nullable: true })
+        .isInt({ min: 1 })
+        .withMessage("Size must be greater than or equal to 1"),
+    check("maxLat")
+        .optional({ nullable: true })
+        .isDecimal()
+        .withMessage("Maximum latitude is invalid"),
+    check("minLat")
+        .optional({ nullable: true })
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    check("maxLng")
+        .optional({ nullable: true })
+        .isDecimal()
+        .withMessage("Maximum longitude is invalid"),
+    check("minLng")
+        .optional({ nullable: true })
+        .isDecimal()
+        .withMessage("Minimum longitude is invalid"),
+    check("minPrice")
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage("Minimum price must be greater or equal to 0"),
+    check("maxPrice")
+        .optional()
+        .isFloat({ min: 0 })
+        .withMessage("Maximum price must be greater or equal to 0"),
+    handleValidationErrors
+]
 
-    let spots = await Spot.findAll({
+// Get all spots
+router.get('/', validateQuery, async (req, res, next) => {
+
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query
+
+    page = Number(page)
+    size = Number(size);
+
+    if (!page) page = 1
+    if (!size) size = 20
+    if (page > 10) page = 10;
+    if (size > 20) size = 20;
+
+    let pagination = {}
+    if (parseInt(page) >= 1 && parseInt(size) >= 1) {
+        pagination.limit = size
+        pagination.offset = size * (page - 1)
+    }
+
+    const query = {
+        where: {},
         include: [
             {
                 model: Review,
@@ -93,50 +148,99 @@ router.get('/', async (req, res, next) => {
                 model: SpotImage,
                 attributes: ['url', 'preview']
             }
-        ]
-    })
+        ],
+        ...pagination,
+    };
+
+    // Latitude query
+
+    if (maxLat && !minLat) {
+        query.where.lat = {
+            [Op.lte]: maxLat
+        }
+    };
+
+    if (!maxLat && minLat) {
+        query.where.lat = {
+            [Op.gte]: minLat
+        }
+    };
+
+    if (maxLat && minLat) {
+        query.where.lat = {
+            [Op.and]: {
+                [Op.lte]: maxLat,
+                [Op.gte]: minLat
+            }
+        }
+    };
+
+    // Longitude Query
+
+    if (maxLng && !minLng) {
+        query.where.lng = {
+            [Op.lte]: maxLng
+        }
+    };
+
+    if (!maxLng && minLng) {
+        query.where.lng = {
+            [Op.gte]: minLng
+        }
+    };
+
+    if (maxLng && minLng) {
+        query.where.lng = {
+            [Op.and]: {
+                [Op.lte]: maxLng,
+                [Op.gte]: minLng
+            }
+        }
+    };
+
+    // Price Query
+
+    if (maxPrice && !minPrice) {
+        query.where.price = {
+            [Op.lte]: maxPrice
+        }
+    };
+
+    if (!maxPrice && minPrice) {
+        query.where.price = {
+            [Op.gte]: minPrice
+        }
+    };
+
+    if (maxPrice && minPrice) {
+        query.where.price = {
+            [Op.and]: {
+                [Op.lte]: maxPrice,
+                [Op.gte]: minPrice
+            }
+        }
+    };
+
+    let spots = await Spot.findAll(query);
+
+
+    // let spots = await Spot.findAll({
+    //     include: [
+    //         {
+    //             model: Review,
+    //             attributes: ['stars']
+    //         },
+    //         {
+    //             model: SpotImage,
+    //             attributes: ['url', 'preview']
+    //         }
+    //     ],
+    //     ...pagination
+    // })
 
     let spotsArr = [];
 
     spots.forEach(spot => {
-        // let count = spot.Reviews.length;
-        // let sum = 0;
-        // spot.Reviews.forEach((review) => sum += review.stars)
-        // let avg = sum / count;
-        // if (!avg) {
-        //     // eachSpot.avgRating = "No current ratings"
-        //     avg = "No current ratings"
-        // };
-
-        // let eachSpot = {
-        //     id: spot.id,
-        //     ownerId: spot.ownerId,
-        //     address: spot.address,
-        //     city: spot.city,
-        //     state: spot.state,
-        //     country: spot.country,
-        //     lat: spot.lat,
-        //     lng: spot.lng,
-        //     name: spot.name,
-        //     description: spot.description,
-        //     price: spot.price,
-        //     createdAt: spot.createdAt,
-        //     updatedAt: spot.updatedAt,
-        //     avgRating: avg
-        // }
-
-        // // console.log(spot)
-        // // console.log(spot.SpotImages)
-
-        // if (spot.SpotImages.length > 0) {
-        //     if (spot.SpotImages[0].dataValues.url) {
-        //         eachSpot.previewImage = spot.SpotImages[0].dataValues.url
-        //     } else {
-        //         eachSpot.previewImage = "No current image listed"
-        //     }
-        // } else {
-        //     eachSpot.previewImage = "No current image listed"
-        // }
         let eachSpot = spot.toJSON();
 
         let count = spot.Reviews.length;
@@ -190,19 +294,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
             }
         ]
     })
-
-    // let spots = await Spot.findAll({
-    //     where: {
-    //         ownerId: user.id
-    //     },
-    //     include: [{
-    //         model: Review,
-    //         attributes: ['stars']
-    //     }, {
-    //         model: SpotImage,
-    //         attributes: ['url']
-    //     }]
-    // })
 
     let ownedSpots = [];
 
@@ -329,14 +420,6 @@ router.get('/:spotId', async (req, res, next) => {
         spot.SpotImages = "No images listed"
     }
 
-    // let owner = await User.findByPk(spot.ownerId);
-    // console.log(owner.toJSON());
-
-    // spot.Owner = {
-    //     id: owner.id,
-    //     firstName: owner.firstName,
-    //     lastName: owner.lastName
-    // }
 
     spot.Owner = await User.findByPk(spot.ownerId, {
         attributes: ['id', 'firstName', 'lastName']
