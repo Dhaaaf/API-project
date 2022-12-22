@@ -96,7 +96,7 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
     let err = {};
     if (startDate.getTime() <= new Date()) {
         err.title = "Can't start a booking in the past";
-        err.statusCode = 403;
+        err.status = 403;
         err.message = "Start date cannot be before today"
         return next(err)
     }
