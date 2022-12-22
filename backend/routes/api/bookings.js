@@ -5,23 +5,23 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../../db/models');
 
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors, validateBooking } = require('../../utils/validation');
 const sequelize = require('sequelize');
 
-const validateBooking = [
-    check('startDate')
-        .notEmpty()
-        .isDate()
-        .withMessage('Start date must be a date'),
-    check('endDate')
-        .notEmpty()
-        .isDate()
-        .withMessage('End date must be a date and cannot be on or before start date'),
-    handleValidationErrors
-];
+// const validateBooking = [
+//     check('startDate')
+//         .notEmpty()
+//         .isDate()
+//         .withMessage('Start date must be a date'),
+//     check('endDate')
+//         .notEmpty()
+//         .isDate()
+//         .withMessage('End date must be a date and cannot be on or before start date'),
+//     handleValidationErrors
+// ];
 
 
-// Get bookings for ucrrent user
+// Get bookings for current user
 router.get("/current", requireAuth, async (req, res, next) => {
     const user = req.user;
 
@@ -76,6 +76,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
     })
 })
 
+// Convert Date helper function
 const convertDate = (date) => {
     const [year, month, day] = date.split("-");
     const monthIndex = month - 1;
@@ -101,6 +102,7 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
         return next(err)
     }
 
+    /// If booking exists
     if (!bookingToEdit) {
         err.title = "Couldn't find a booking with the specific id"
         err.status = 404;
@@ -126,6 +128,7 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
         return next(err);
     };
 
+    /// If booking belongs to current user
     if (user.id !== bookingToEdit.userId) {
         err.title = "Authorization error";
         err.status = 403;
@@ -187,6 +190,8 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
     let booking = await Booking.findByPk(bookingId);
 
     let err = {};
+
+    /// If Booking exists
     if (!booking) {
         err.title = "Couldn't find a booking with the specific id"
         err.status = 404;
@@ -196,6 +201,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
 
     let spot = await booking.getSpot();
 
+    // If booking doesn't belong to user or spot owner
     if (user.id !== booking.userId && user.id !== spot.ownerId) {
         err.title = "Authorization error";
         err.status = 403;
@@ -218,8 +224,6 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
         "statusCode": 200
     })
 })
-
-
 
 
 

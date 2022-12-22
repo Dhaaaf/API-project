@@ -16,6 +16,8 @@ router.delete("/:imageId", requireAuth, async (req, res, next) => {
     const image = await SpotImage.findByPk(imageId);
 
     const err = {};
+
+    /// If Spot Image Exists
     if (!image) {
         err.title = "Couldn't find a Spot Image with the specified id";
         err.status = 404;
@@ -24,6 +26,8 @@ router.delete("/:imageId", requireAuth, async (req, res, next) => {
     };
 
     const spot = await image.getSpot();
+
+    /// If User owns spot
     if (user.id !== spot.ownerId) {
         err.title = "Authorization error";
         err.status = 403;

@@ -16,6 +16,8 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     const image = await ReviewImage.findByPk(imageId);
 
     const err = {};
+
+    /// If review image exists
     if (!image) {
         err.title = "Couldn't find a Review Image with the specified id";
         err.status = 404;
@@ -24,6 +26,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     };
 
     const review = await image.getReview();
+    /// If review belongs to user
     if (user.id !== review.userId) {
         err.title = "Authorization error";
         err.status = 403;

@@ -5,118 +5,128 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../../db/models');
 
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+
+const {
+    handleValidationErrors,
+    validateSpot,
+    validateReview,
+    validateBooking,
+    validateSpotImage,
+    validateQuery
+} = require('../../utils/validation');
+
+
 const sequelize = require('sequelize');
 
 const { Op } = require('sequelize');
 
 
-const validateSpot = [
-    check('address')
-        .notEmpty()
-        .withMessage('Street address is required'),
-    check('city')
-        .notEmpty()
-        .withMessage('City is required'),
-    check('state')
-        .notEmpty()
-        .withMessage('State is required'),
-    check('country')
-        .notEmpty()
-        .withMessage('Country is required'),
-    check('lat', "Latitude is not valid")
-        .notEmpty()
-        .bail()
-        .isDecimal()
-        .withMessage('Latitude is not valid'),
-    check('lng', "Longitude is not valid")
-        .notEmpty()
-        .bail()
-        .isDecimal()
-        .withMessage('Longitude is not valid'),
-    check('name')
-        .notEmpty()
-        .isLength({ max: 50 })
-        .withMessage('Name must be less than 50 characters'),
-    check('description')
-        .notEmpty()
-        .withMessage('Description is required'),
-    check('price')
-        .notEmpty()
-        .withMessage('Price per day is required'),
-    handleValidationErrors
-];
+// const validateSpot = [
+//     check('address')
+//         .notEmpty()
+//         .withMessage('Street address is required'),
+//     check('city')
+//         .notEmpty()
+//         .withMessage('City is required'),
+//     check('state')
+//         .notEmpty()
+//         .withMessage('State is required'),
+//     check('country')
+//         .notEmpty()
+//         .withMessage('Country is required'),
+//     check('lat', "Latitude is not valid")
+//         .notEmpty()
+//         .bail()
+//         .isDecimal()
+//         .withMessage('Latitude is not valid'),
+//     check('lng', "Longitude is not valid")
+//         .notEmpty()
+//         .bail()
+//         .isDecimal()
+//         .withMessage('Longitude is not valid'),
+//     check('name')
+//         .notEmpty()
+//         .isLength({ max: 50 })
+//         .withMessage('Name must be less than 50 characters'),
+//     check('description')
+//         .notEmpty()
+//         .withMessage('Description is required'),
+//     check('price')
+//         .notEmpty()
+//         .withMessage('Price per day is required'),
+//     handleValidationErrors
+// ];
 
-const validateReview = [
-    check('review')
-        .notEmpty()
-        .withMessage('Review text is required'),
-    check('stars')
-        .notEmpty()
-        .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5'),
-    handleValidationErrors
-];
+// const validateReview = [
+//     check('review')
+//         .notEmpty()
+//         .withMessage('Review text is required'),
+//     check('stars')
+//         .notEmpty()
+//         .isInt({ min: 1, max: 5 })
+//         .withMessage('Stars must be an integer from 1 to 5'),
+//     handleValidationErrors
+// ];
 
 
-const validateBooking = [
-    check('startDate')
-        .notEmpty()
-        .isDate()
-        .withMessage('Start date must be a date'),
-    check('endDate')
-        .notEmpty()
-        .isDate()
-        .withMessage('End date must be a date and cannot be on or before start date'),
-    handleValidationErrors
-];
+// const validateBooking = [
+//     check('startDate')
+//         .notEmpty()
+//         .isDate()
+//         .withMessage('Start date must be a date'),
+//     check('endDate')
+//         .notEmpty()
+//         .isDate()
+//         .withMessage('End date must be a date and cannot be on or before start date'),
+//     handleValidationErrors
+// ];
 
-const validateSpotImage = [
-    check('url')
-        .notEmpty()
-        .withMessage('url must be defined'),
-    check('preview')
-        .notEmpty()
-        .isBoolean()
-        .withMessage('preview must be a boolean value'),
-    handleValidationErrors
-];
+// const validateSpotImage = [
+//     check('url')
+//         .notEmpty()
+//         .withMessage('url must be defined'),
+//     check('preview')
+//         .notEmpty()
+//         .isBoolean()
+//         .withMessage('preview must be a boolean value'),
+//     handleValidationErrors
+// ];
 
-const validateQuery = [
-    check("page")
-        .optional({ nullable: true })
-        .isInt({ min: 1 })
-        .withMessage("Page must be greater than or equal to 1"),
-    check("size")
-        .optional({ nullable: true })
-        .isInt({ min: 1 })
-        .withMessage("Size must be greater than or equal to 1"),
-    check("maxLat")
-        .optional({ nullable: true })
-        .isDecimal()
-        .withMessage("Maximum latitude is invalid"),
-    check("minLat")
-        .optional({ nullable: true })
-        .isDecimal()
-        .withMessage("Minimum latitude is invalid"),
-    check("maxLng")
-        .optional({ nullable: true })
-        .isDecimal()
-        .withMessage("Maximum longitude is invalid"),
-    check("minLng")
-        .optional({ nullable: true })
-        .isDecimal()
-        .withMessage("Minimum longitude is invalid"),
-    check("minPrice")
-        .optional()
-        .isFloat({ min: 0 })
-        .withMessage("Minimum price must be greater or equal to 0"),
-    check("maxPrice")
-        .optional()
-        .isFloat({ min: 0 })
-        .withMessage("Maximum price must be greater or equal to 0"),
-    handleValidationErrors
-]
+// const validateQuery = [
+//     check("page")
+//         .optional({ nullable: true })
+//         .isInt({ min: 1 })
+//         .withMessage("Page must be greater than or equal to 1"),
+//     check("size")
+//         .optional({ nullable: true })
+//         .isInt({ min: 1 })
+//         .withMessage("Size must be greater than or equal to 1"),
+//     check("maxLat")
+//         .optional({ nullable: true })
+//         .isDecimal()
+//         .withMessage("Maximum latitude is invalid"),
+//     check("minLat")
+//         .optional({ nullable: true })
+//         .isDecimal()
+//         .withMessage("Minimum latitude is invalid"),
+//     check("maxLng")
+//         .optional({ nullable: true })
+//         .isDecimal()
+//         .withMessage("Maximum longitude is invalid"),
+//     check("minLng")
+//         .optional({ nullable: true })
+//         .isDecimal()
+//         .withMessage("Minimum longitude is invalid"),
+//     check("minPrice")
+//         .optional()
+//         .isFloat({ min: 0 })
+//         .withMessage("Minimum price must be greater or equal to 0"),
+//     check("maxPrice")
+//         .optional()
+//         .isFloat({ min: 0 })
+//         .withMessage("Maximum price must be greater or equal to 0"),
+//     handleValidationErrors
+// ]
 
 // Get all spots
 router.get('/', validateQuery, async (req, res, next) => {
@@ -310,33 +320,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
         eachSpot.avgRating = avg;
 
-        // let eachSpot = {
-        //     id: spot.id,
-        //     ownerId: spot.ownerId,
-        //     address: spot.address,
-        //     city: spot.city,
-        //     state: spot.state,
-        //     country: spot.country,
-        //     lat: spot.lat,
-        //     lng: spot.lng,
-        //     name: spot.name,
-        //     description: spot.description,
-        //     price: spot.price,
-        //     createdAt: spot.createdAt,
-        //     updatedAt: spot.updatedAt,
-        //     avgRating: avg
-        // }
-
-        // if (spot.SpotImages.length > 0) {
-        //     if (spot.SpotImages[0].dataValues.url) {
-        //         eachSpot.previewImage = spot.SpotImages[0].dataValues.url
-        //     } else {
-        //         eachSpot.previewImage = "No current image listed"
-        //     }
-        // } else {
-        //     eachSpot.previewImage = "No current image listed"
-        // }
-
         if (eachSpot.SpotImages.length > 0) {
             for (let i = 0; i < eachSpot.SpotImages.length; i++) {
                 if (eachSpot.SpotImages[i].preview === true) {
@@ -377,6 +360,9 @@ router.get('/:spotId', async (req, res, next) => {
     let { spotId } = req.params;
 
     let spot = await Spot.findByPk(spotId);
+
+    // If Spot exists
+
     if (!spot) {
         let err = {};
         err.title = "Not found"
@@ -464,6 +450,7 @@ router.post('/:spotId/images', requireAuth, validateSpotImage, async (req, res, 
 
     const spot = await Spot.findByPk(spotId);
 
+    /// If Spot exists
     let err = {};
     if (!spot) {
         err.title = "Spot couldn't be found"
@@ -472,6 +459,7 @@ router.post('/:spotId/images', requireAuth, validateSpotImage, async (req, res, 
         return next(err);
     }
 
+    /// If Spot belongs to user
     if (user.id !== spot.ownerId) {
         err.title = "Authorization error";
         err.status = 403;
@@ -501,6 +489,8 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     const user = req.user;
 
     const err = {};
+
+    /// If Spot Exists
     if (!spot) {
         err.title = "Spot couldn't be found"
         err.status = 404;
@@ -508,6 +498,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
         return next(err);
     }
 
+    /// If Spot belongs to user
     if (user.id !== spot.ownerId) {
         err.title = "Authorization error";
         err.status = 403;
@@ -538,6 +529,8 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
     const user = req.user;
 
     const err = {};
+
+    /// If spot exists
     if (!spot) {
         err.title = "Spot couldn't be found"
         err.status = 404;
@@ -545,6 +538,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         return next(err);
     }
 
+    /// If spot belongs to user
     if (user.id !== spot.ownerId) {
         err.title = "Authorization error";
         err.status = 403;
@@ -568,6 +562,8 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     const spot = await Spot.findByPk(spotId);
 
     const err = {};
+
+    /// If Spot exists
     if (!spot) {
         err.title = "Couldn't find a Spot with the specified id"
         err.status = 404;
@@ -618,6 +614,8 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     const spot = await Spot.findByPk(spotId);
 
     const err = {};
+
+    /// If spot exists
     if (!spot) {
         err.title = "Couldn't find a Spot with the specified id"
         err.status = 404;
@@ -632,6 +630,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
         }
     })
 
+    /// If Review exists
     if (existingReview) {
         err.title = "Review from the current user already exists for the Spot";
         err.status = 403;
@@ -665,6 +664,8 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const spot = await Spot.findByPk(spotId);
 
     const err = {};
+
+    /// If Spot exists
     if (!spot) {
         err.title = "Couldn't find a Spot with the specified id"
         err.status = 404;
@@ -716,7 +717,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     })
 })
 
-
+/// Convert Date helper function
 const convertDate = (date) => {
     const [year, month, day] = date.split("-");
     const monthIndex = month - 1;
@@ -752,6 +753,7 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
         return next(err);
     };
 
+    /// If Spot exists
     if (!spot) {
         err.title = "Couldn't find a Spot with the specified id"
         err.status = 404;
@@ -759,6 +761,7 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
         return next(err);
     };
 
+    /// Owner can't make booking on own spot
     if (user.id === spot.ownerId) {
         err.title = "Owner can't make booking for owned spot";
         err.status = 403;
