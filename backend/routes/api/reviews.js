@@ -5,27 +5,27 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User, Spot, Review, SpotImage, ReviewImage, Booking } = require('../../db/models');
 
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors, validateReview, validateReviewImage } = require('../../utils/validation');
 const sequelize = require('sequelize');
 
 
-const validateReview = [
-    check('review')
-        .notEmpty()
-        .withMessage('Review text is required'),
-    check('stars')
-        .notEmpty()
-        .isInt({ min: 1, max: 5 })
-        .withMessage('Stars must be an integer from 1 to 5'),
-    handleValidationErrors
-];
+// const validateReview = [
+//     check('review')
+//         .notEmpty()
+//         .withMessage('Review text is required'),
+//     check('stars')
+//         .notEmpty()
+//         .isInt({ min: 1, max: 5 })
+//         .withMessage('Stars must be an integer from 1 to 5'),
+//     handleValidationErrors
+// ];
 
-const validateReviewImage = [
-    check('url')
-        .notEmpty()
-        .withMessage('url must be defined'),
-    handleValidationErrors
-];
+// const validateReviewImage = [
+//     check('url')
+//         .notEmpty()
+//         .withMessage('url must be defined'),
+//     handleValidationErrors
+// ];
 
 
 // Get reviews of current user
@@ -98,6 +98,8 @@ router.post("/:reviewId/images", requireAuth, validateReviewImage, async (req, r
     const review = await Review.findByPk(reviewId)
 
     const err = {}
+
+    /// If review exists
     if (!review) {
         err.title = "Couldn't find a Review with the specified id";
         err.message = "Review couldn't be found";
@@ -105,6 +107,7 @@ router.post("/:reviewId/images", requireAuth, validateReviewImage, async (req, r
         return next(err)
     };
 
+    /// If review belongs to Current user
     if (review.userId !== user.id) {
         err.title = "Authorization error";
         err.status = 403;
@@ -114,7 +117,6 @@ router.post("/:reviewId/images", requireAuth, validateReviewImage, async (req, r
 
     let allReviewImages = await review.getReviewImages()
 
-    // console.log(allReviewImages.length)
 
     if (allReviewImages.length >= 10) {
         err.title = "Cannot add any more images because there is a maximum of 10 images per resource";
@@ -142,6 +144,8 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
     let editReview = await Review.findByPk(reviewId);
 
     const err = {};
+    /// If review exists
+
     if (!editReview) {
         err.title = "Couldn't find a review with the specified id";
         err.message = "Review couldn't be found";
@@ -149,6 +153,7 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
         return next(err)
     }
 
+    /// If review belongs to current user
     if (editReview.userId !== user.id) {
         err.title = "User cannot edit review they didn't leave";
         err.status = 403;
@@ -172,6 +177,8 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
     let review = await Review.findByPk(reviewId);
 
     const err = {};
+
+    /// If review exists
     if (!review) {
         err.title = "Couldn't find a review with the specified id";
         err.message = "Review couldn't be found";
@@ -179,6 +186,7 @@ router.delete('/:reviewId', requireAuth, async (req, res, next) => {
         return next(err)
     }
 
+    /// If review belongs to current user
     if (review.userId !== user.id) {
         err.title = "User cannot delete review they didn't leave";
         err.status = 403;
