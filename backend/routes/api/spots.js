@@ -654,10 +654,18 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
     const spot = await Spot.findByPk(spotId);
 
     const err = {}
+
+    if (startDate.getTime() <= new Date()) {
+        err.title = "Can't make a booking in the past";
+        err.statusCode = 403;
+        err.message = "Start date cannot be before today";
+        return next(err)
+    }
+
     if (endDate <= startDate) {
         err.title = "Validation error";
         err.statusCode = 400;
-        err.message = "endDate cannot be on or before startDate";
+        err.message = "End date cannot be on or before start Date";
         return next(err);
     };
 
@@ -716,6 +724,8 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
         return res.json(newBooking)
     }
 })
+
+
 
 
 

@@ -94,6 +94,13 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
     let bookingToEdit = await Booking.findByPk(bookingId);
 
     let err = {};
+    if (startDate.getTime() <= new Date()) {
+        err.title = "Can't start a booking in the past";
+        err.statusCode = 403;
+        err.message = "Start date cannot be before today"
+        return next(err)
+    }
+
     if (!bookingToEdit) {
         err.title = "Couldn't find a booking with the specific id"
         err.status = 404;
@@ -170,6 +177,46 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
         bookingToEdit.save();
         res.json(bookingToEdit)
     }
+})
+
+// Delete a Booking
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const { bookingId } = req.params;
+    const user = req.user;
+
+    let booking = await Booking.findByPk(bookingId);
+
+    let err = {};
+    if (!booking) {
+        err.title = "Couldn't find a booking with the specific id"
+        err.status = 404;
+        err.message = "Booking couldn't be found";
+        return next(err)
+    }
+
+    let spot = await booking.getSpot();
+
+    if (user.id !== booking.userId && user.id !== spot.ownerId) {
+        err.title = "Authorization error";
+        err.status = 403;
+        err.message = "Booking doesn't belong to current user";
+        return next(err);
+    }
+
+    const startDate = convertDate(booking.startDate);
+
+    if (startDate.getTime() <= new Date()) {
+        err.title = "Bookings that have been started or completed can't be deleted";
+        err.status = 403;
+        err.message = "Bookings that have been started or completed can't be deleted";
+        return next(err)
+    };
+
+    booking.destroy();
+    return res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    })
 })
 
 
