@@ -11,6 +11,25 @@ const sequelize = require('sequelize');
 const { ifReviewExists, ifUsersReview } = require('../../utils/error-handlers')
 
 
+// const validateReview = [
+//     check('review')
+//         .notEmpty()
+//         .withMessage('Review text is required'),
+//     check('stars')
+//         .notEmpty()
+//         .isInt({ min: 1, max: 5 })
+//         .withMessage('Stars must be an integer from 1 to 5'),
+//     handleValidationErrors
+// ];
+
+// const validateReviewImage = [
+//     check('url')
+//         .notEmpty()
+//         .withMessage('url must be defined'),
+//     handleValidationErrors
+// ];
+
+
 // Get reviews of current user
 router.get('/current', requireAuth, async (req, res, next) => {
     const userId = req.user.id;
@@ -46,6 +65,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     let reviewArr = [];
     reviews.forEach(review => {
         let eachReview = review.toJSON();
+        // console.log(eachReview.Spot.SpotImages)
         if (eachReview.Spot.SpotImages.length > 0) {
             for (let i = 0; i < eachReview.Spot.SpotImages.length; i++) {
                 if (eachReview.Spot.SpotImages[i].preview === true) {
@@ -71,7 +91,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 })
 
-
 // Add an Image to a Review based on the Review's id
 router.post("/:reviewId/images", requireAuth, ifReviewExists, ifUsersReview, validateReviewImage, async (req, res, next) => {
     const { reviewId } = req.params;
@@ -80,9 +99,28 @@ router.post("/:reviewId/images", requireAuth, ifReviewExists, ifUsersReview, val
 
     const review = await Review.findByPk(reviewId)
 
+    const err = {}
+
+    /// If review exists
+    // if (!review) {
+    //     err.title = "Couldn't find a Review with the specified id";
+    //     err.message = "Review couldn't be found";
+    //     err.status = 401;
+    //     return next(err)
+    // };
+
+    /// If review belongs to Current user
+
+    // if (review.userId !== user.id) {
+    //     err.title = "Authorization error";
+    //     err.status = 403;
+    //     err.message = "Review doesn't belong to current user";
+    //     return next(err);
+    // }
+
     let allReviewImages = await review.getReviewImages()
 
-    const err = {}
+
     if (allReviewImages.length >= 10) {
         err.title = "Cannot add any more images because there is a maximum of 10 images per resource";
         err.message = "Maximum number of images for this resource was reached";
@@ -100,7 +138,6 @@ router.post("/:reviewId/images", requireAuth, ifReviewExists, ifUsersReview, val
     })
 })
 
-
 /// Edit a Review
 router.put('/:reviewId', requireAuth, validateReview, ifReviewExists, ifUsersReview, async (req, res, next) => {
     const { reviewId } = req.params;
@@ -108,6 +145,25 @@ router.put('/:reviewId', requireAuth, validateReview, ifReviewExists, ifUsersRev
     const user = req.user;
 
     let editReview = await Review.findByPk(reviewId);
+
+    // const err = {};
+    /// If review exists
+
+    // if (!editReview) {
+    //     err.title = "Couldn't find a review with the specified id";
+    //     err.message = "Review couldn't be found";
+    //     err.status = 404;
+    //     return next(err)
+    // }
+
+    /// If review belongs to current user
+
+    // if (editReview.userId !== user.id) {
+    //     err.title = "User cannot edit review they didn't leave";
+    //     err.status = 403;
+    //     err.message = "This review doesn't belong to the current user";
+    //     return next(err)
+    // }
 
     editReview.review = review;
     editReview.stars = stars;
@@ -123,6 +179,25 @@ router.delete('/:reviewId', requireAuth, ifReviewExists, ifUsersReview, async (r
     const user = req.user;
 
     let review = await Review.findByPk(reviewId);
+
+    // const err = {};
+
+    /// If review exists
+
+    // if (!review) {
+    //     err.title = "Couldn't find a review with the specified id";
+    //     err.message = "Review couldn't be found";
+    //     err.status = 404;
+    //     return next(err)
+    // }
+
+    /// If review belongs to current user
+    // if (review.userId !== user.id) {
+    //     err.title = "User cannot delete review they didn't leave";
+    //     err.status = 403;
+    //     err.message = "This review doesn't belong to the current user";
+    //     return next(err)
+    // };
 
     review.destroy();
 
