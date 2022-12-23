@@ -8,6 +8,8 @@ const { check } = require('express-validator');
 const { handleValidationErrors, validateBooking } = require('../../utils/validation');
 const sequelize = require('sequelize');
 
+const { convertDate, ifBookingExists } = require('../../utils/error-handlers')
+
 // const validateBooking = [
 //     check('startDate')
 //         .notEmpty()
@@ -77,15 +79,15 @@ router.get("/current", requireAuth, async (req, res, next) => {
 })
 
 // Convert Date helper function
-const convertDate = (date) => {
-    const [year, month, day] = date.split("-");
-    const monthIndex = month - 1;
-    const newDate = new Date(year, monthIndex, day)
-    return newDate;
-}
+// const convertDate = (date) => {
+//     const [year, month, day] = date.split("-");
+//     const monthIndex = month - 1;
+//     const newDate = new Date(year, monthIndex, day)
+//     return newDate;
+// }
 
 // Edit a Booking
-router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) => {
+router.put('/:bookingId', requireAuth, ifBookingExists, validateBooking, async (req, res, next) => {
     const { bookingId } = req.params;
     const user = req.user;
     let { startDate, endDate } = req.body;
@@ -95,7 +97,7 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
     let bookingToEdit = await Booking.findByPk(bookingId);
 
     let err = {};
-    if (startDate.getTime() <= new Date()) {
+    if (startDate <= new Date()) {
         err.title = "Can't start a booking in the past";
         err.status = 403;
         err.message = "Start date cannot be before today"
@@ -103,18 +105,19 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
     }
 
     /// If booking exists
-    if (!bookingToEdit) {
-        err.title = "Couldn't find a booking with the specific id"
-        err.status = 404;
-        err.message = "Booking couldn't be found";
-        return next(err)
-    }
-    // booking = booking.toJSON();
+
+    // if (!bookingToEdit) {
+    //     err.title = "Couldn't find a booking with the specific id"
+    //     err.status = 404;
+    //     err.message = "Booking couldn't be found";
+    //     return next(err)
+    // }
+
     bookingStartDate = convertDate(bookingToEdit.startDate);
     bookingEndDate = convertDate(bookingToEdit.endDate);
     const spotId = bookingToEdit.spotId;
 
-    if (bookingEndDate.getTime() < new Date()) {
+    if (bookingEndDate < new Date()) {
         err.title = "Can't edit a booking that's past the end date";
         err.status = 403;
         err.message = "Past bookings can't be modified";
@@ -183,24 +186,24 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
 })
 
 // Delete a Booking
-router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+router.delete('/:bookingId', requireAuth, ifBookingExists, async (req, res, next) => {
     const { bookingId } = req.params;
     const user = req.user;
 
     let booking = await Booking.findByPk(bookingId);
 
-    let err = {};
 
     /// If Booking exists
-    if (!booking) {
-        err.title = "Couldn't find a booking with the specific id"
-        err.status = 404;
-        err.message = "Booking couldn't be found";
-        return next(err)
-    }
+    // if (!booking) {
+    //     err.title = "Couldn't find a booking with the specific id"
+    //     err.status = 404;
+    //     err.message = "Booking couldn't be found";
+    //     return next(err)
+    // }
 
     let spot = await booking.getSpot();
 
+    let err = {};
     // If booking doesn't belong to user or spot owner
     if (user.id !== booking.userId && user.id !== spot.ownerId) {
         err.title = "Authorization error";
@@ -211,7 +214,7 @@ router.delete('/:bookingId', requireAuth, async (req, res, next) => {
 
     const startDate = convertDate(booking.startDate);
 
-    if (startDate.getTime() <= new Date()) {
+    if (startDate <= new Date()) {
         err.title = "Bookings that have been started or completed can't be deleted";
         err.status = 403;
         err.message = "Bookings that have been started or completed can't be deleted";
