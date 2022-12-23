@@ -10,18 +10,6 @@ const sequelize = require('sequelize');
 
 const { convertDate, ifBookingExists } = require('../../utils/error-handlers')
 
-// const validateBooking = [
-//     check('startDate')
-//         .notEmpty()
-//         .isDate()
-//         .withMessage('Start date must be a date'),
-//     check('endDate')
-//         .notEmpty()
-//         .isDate()
-//         .withMessage('End date must be a date and cannot be on or before start date'),
-//     handleValidationErrors
-// ];
-
 
 // Get bookings for current user
 router.get("/current", requireAuth, async (req, res, next) => {
@@ -78,14 +66,6 @@ router.get("/current", requireAuth, async (req, res, next) => {
     })
 })
 
-// Convert Date helper function
-// const convertDate = (date) => {
-//     const [year, month, day] = date.split("-");
-//     const monthIndex = month - 1;
-//     const newDate = new Date(year, monthIndex, day)
-//     return newDate;
-// }
-
 // Edit a Booking
 router.put('/:bookingId', requireAuth, ifBookingExists, validateBooking, async (req, res, next) => {
     const { bookingId } = req.params;
@@ -103,15 +83,6 @@ router.put('/:bookingId', requireAuth, ifBookingExists, validateBooking, async (
         err.message = "Start date cannot be before today"
         return next(err)
     }
-
-    /// If booking exists
-
-    // if (!bookingToEdit) {
-    //     err.title = "Couldn't find a booking with the specific id"
-    //     err.status = 404;
-    //     err.message = "Booking couldn't be found";
-    //     return next(err)
-    // }
 
     bookingStartDate = convertDate(bookingToEdit.startDate);
     bookingEndDate = convertDate(bookingToEdit.endDate);
@@ -149,7 +120,7 @@ router.put('/:bookingId', requireAuth, ifBookingExists, validateBooking, async (
 
             booking = booking.toJSON();
             err.title = "Booking Conflict";
-            err.statusCode = 403;
+            err.status = 403;
             err.message = "Sorry, this spot is already booked for the specified dates";
 
             bookedStartDate = convertDate(booking.startDate);
@@ -191,15 +162,6 @@ router.delete('/:bookingId', requireAuth, ifBookingExists, async (req, res, next
     const user = req.user;
 
     let booking = await Booking.findByPk(bookingId);
-
-
-    /// If Booking exists
-    // if (!booking) {
-    //     err.title = "Couldn't find a booking with the specific id"
-    //     err.status = 404;
-    //     err.message = "Booking couldn't be found";
-    //     return next(err)
-    // }
 
     let spot = await booking.getSpot();
 

@@ -53,7 +53,7 @@ const ifReviewExists = async (req, res, next) => {
         const err = {}
         err.title = "Couldn't find a Review with the specified id";
         err.message = "Review couldn't be found";
-        err.status = 401;
+        err.status = 404;
         return next(err)
     };
     return next();
