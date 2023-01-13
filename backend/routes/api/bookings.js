@@ -145,7 +145,6 @@ router.put('/:bookingId', requireAuth, ifBookingExists, validateBooking, async (
             }
         }
 
-
     });
 
     if (!err.errors) {
