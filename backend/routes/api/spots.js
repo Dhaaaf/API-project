@@ -366,7 +366,6 @@ router.delete('/:spotId', requireAuth, ifSpotExists, ifUsersSpot, async (req, re
         message: "Successfully deleted",
         statusCode: 200
     })
-
 })
 
 
