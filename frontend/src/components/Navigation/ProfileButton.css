@@ -56,6 +56,11 @@
     font-size: 15px;
 }
 
+.dropdown-menu {
+    width: 100%;
+    height: inherit;
+}
+
 .log-in-sign-up {
     text-align: left;
     width: 100%;
@@ -96,6 +101,13 @@
     font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
     font-size: 14px;
     transition-property: all;
+}
+
+#demo-user-button {
+    width: 100%;
+    height: 25px;
+    margin-top: 5px;
+    background-color: rgb(227, 28, 95);
 }
 
 #logout-button {
