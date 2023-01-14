@@ -27,33 +27,45 @@ function LoginFormModal() {
 
     return (
         <>
-            <h1>Log In</h1>
-            <form onSubmit={handleSubmit}>
-                <ul>
-                    {errors.map((error, idx) => (
-                        <li key={idx}>{error}</li>
-                    ))}
-                </ul>
-                <label>
-                    Username or Email
-                    <input
-                        type="text"
-                        value={credential}
-                        onChange={(e) => setCredential(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Password
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                <button type="submit">Log In</button>
-            </form>
+            <div className="log-in-form-div">
+                <h3 className="login-text">Log In</h3>
+                <form onSubmit={handleSubmit} className='login-form'>
+                    <div className="login-inputs">
+                        <h3>Welcome to Fantasybnb</h3>
+                        <label className="placeholder"
+                            data-placeholder="Username or Email">
+                            {/* Username or Email */}
+                            <input
+                                type="text"
+                                value={credential}
+                                onChange={(e) => setCredential(e.target.value)}
+                                required
+                                placeholder="Username or Email"
+                                id='username-input'
+                            />
+                        </label>
+                        <label
+                            className="placeholder"
+                            data-placeholder="Password">
+                            {/* Password */}
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                placeholder="Password"
+                                id="password-input"
+                            />
+                        </label>
+                    </div>
+                    <ul>
+                        {errors.map((error, idx) => (
+                            <li key={idx}>{error}</li>
+                        ))}
+                    </ul>
+                    <button type="submit" className='fantasybnb-button' id='log-in-button'>Log In</button>
+                </form>
+            </div>
         </>
     );
 }

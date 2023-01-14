@@ -1,0 +1,105 @@
+.signup-form-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 444px;
+    height: fit-content;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: -20px;
+    width: inherit;
+
+}
+
+.signup-text {
+    border-bottom: 1px solid rgba(118, 118, 118, 0.8);
+    display: flex;
+    justify-content: center;
+    padding-bottom: 1rem;
+    width: inherit;
+}
+
+.signup-inputs {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+#email-input {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 24px 24px 24px 10px;
+    width: 100%;
+    height: 20px;
+    border-radius: 10px 10px 0px 0px;
+}
+
+#user-input {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 24px 24px 24px 10px;
+    width: 100%;
+    height: 20px;
+    /* border-radius: 10px 10px 0px 0px; */
+}
+
+#first-name-input {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 24px 24px 24px 10px;
+    width: 100%;
+    height: 20px;
+}
+
+#last-name-input {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 24px 24px 24px 10px;
+    width: 100%;
+    height: 20px;
+}
+
+#pw-input {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 24px 24px 24px 10px;
+    width: 100%;
+    height: 20px;
+}
+
+#confirm-password-input {
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 24px 24px 24px 10px;
+    width: 100%;
+    height: 20px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+#sign-up-button {
+    width: 90%;
+    margin-top: 0px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 15px;
+}
+
+.placeholder {
+    position: relative;
+    font-size: 9px;
+}
+
+.placeholder::after {
+    position: absolute;
+    left: 12px;
+    top: 5px;
+    content: attr(data-placeholder);
+    pointer-events: none;
+    opacity: 0.7;
+
+}

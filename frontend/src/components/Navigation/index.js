@@ -8,17 +8,18 @@ import './Navigation.css';
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
 
+
     return (
-        <ul>
-            <li>
-                <NavLink exact to="/">Home</NavLink>
-            </li>
+        <div className='navigation-bar'>
+            <div className='left-nav-div'>
+                <NavLink exact to="/"><i class="fa-brands fa-fort-awesome">FantasyBnB</i></NavLink>
+            </div>
             {isLoaded && (
-                <li>
+                <div className='right-nav-div'>
                     <ProfileButton user={sessionUser} />
-                </li>
+                </div>
             )}
-        </ul>
+        </div>
     );
 }
 
