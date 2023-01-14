@@ -11,16 +11,19 @@ function Navigation({ isLoaded }) {
 
     return (
         <div className='navigation-bar'>
-            <div className='left-nav-div'>
-                <NavLink exact to="/"><i class="fa-brands fa-fort-awesome">FantasyBnB</i></NavLink>
-            </div>
-            {isLoaded && (
-                <div className='right-nav-div'>
-                    <ProfileButton user={sessionUser} />
+            <div className='nav-innerdiv'>
+                <div className='left-nav-div'>
+                    <NavLink exact to="/" className="home-link"><i class="fa-brands fa-fort-awesome"></i></NavLink>
                 </div>
-            )}
+                {isLoaded && (
+                    <div className='right-nav-div'>
+                        <ProfileButton user={sessionUser} />
+                    </div>
+                )}
+            </div>
         </div>
     );
+
 }
 
 

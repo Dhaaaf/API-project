@@ -2,22 +2,39 @@
     display: none
 }
 
+
 .navigation-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-content: center;
-    border-bottom: 1px solid rgba(118, 118, 118, 0.8);
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    border-bottom: 1px solid rgba(165, 165, 165, 0.8);
+    border-top: 1px solid rgba(165, 165, 165, 0.8);
     margin-left: 0px;
     margin-right: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
-    padding-bottom: 7px;
-    height: 25px;
+    padding: 8px 0px;
+}
+
+.nav-innerdiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    padding: 20px;
 }
 
 .left-nav-div {
-    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-link {
+    color: #ff5a5f;
+    font-size: 23px;
 }
 
 .right-nav-div {
