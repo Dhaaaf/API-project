@@ -8,13 +8,13 @@
     position: fixed;
     top: 0;
     background-color: white;
-    border-bottom: 1px solid rgba(165, 165, 165, 0.8);
-    border-top: 1px solid rgba(165, 165, 165, 0.8);
+    border-bottom: 1px solid rgba(165, 165, 165, 0.2);
+    border-top: 1px solid rgba(165, 165, 165, 0.2);
     margin-left: 0px;
     margin-right: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
-    padding: 8px 0px;
+    padding: 3px 0px;
 }
 
 .nav-innerdiv {
@@ -22,7 +22,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-content: center;
-    padding: 20px;
+    padding: 15px 40px;
 }
 
 .left-nav-div {
@@ -34,7 +34,7 @@
 
 .home-link {
     color: #ff5a5f;
-    font-size: 23px;
+    font-size: 38px;
 }
 
 .right-nav-div {

@@ -29,9 +29,17 @@
 .profile-button {
     background-color: #ffffff;
     border: 1px solid #dddddd;
-    border-radius: 21px;
+    border-radius: 20px;
     color: gray;
     font-size: 30px;
+}
+
+.profile-button-bars-div {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .profile-button-container:hover {
@@ -40,13 +48,6 @@
     box-shadow: -2px 3px 1px rgba(165, 165, 165, 0.2);
     transition-property: box-shadow;
     transition-duration: 0.3s;
-}
-
-.profile-button-bars-div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
 }
 
 #solid-bars {
