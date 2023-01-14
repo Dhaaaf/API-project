@@ -1,1 +1,17 @@
 /* TODO Add site wide styles */
+
+a {
+    text-decoration: none;
+    color: black
+}
+
+.fantasybnb-button {
+    background-image: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
+    color: rgb(180, 35, 35);
+    font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
+    font-weight: bolder;
+    border: none;
+    border-radius: 7px;
+    height: 3rem;
+    box-sizing: border-box;
+}
