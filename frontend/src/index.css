@@ -6,8 +6,8 @@ a {
 }
 
 .fantasybnb-button {
-    background-image: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
-    color: rgb(180, 35, 35);
+    background-color: rgb(227, 28, 95);
+    color: white;
     font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
     font-weight: bolder;
     border: none;
