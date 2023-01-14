@@ -4,7 +4,6 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import { Link } from "react-router-dom";
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
@@ -44,8 +43,10 @@ function ProfileButton({ user }) {
     return (
         <div className='profile-button-container'>
             <button onClick={openMenu} className='profile-button'>
-                <i class="fa-solid fa-bars" id='solid-bars' />
-                <i className="fas fa-user-circle" />
+                <div className="profile-button-bars-div">
+                    <i class="fa-solid fa-bars" id='solid-bars' />
+                    <i className="fas fa-user-circle" />
+                </div>
             </button>
             <div className={ulClassName} ref={ulRef}>
                 {user ? (
