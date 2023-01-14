@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     width: 444px;
+    height: 333px;
     height: fit-content;
 }
 
@@ -61,19 +62,4 @@
     margin-left: 25px;
     margin-right: 25px;
     margin-bottom: 10px;
-}
-
-.placeholder {
-    position: relative;
-    font-size: 9px;
-}
-
-.placeholder::after {
-    position: absolute;
-    left: 12px;
-    top: 5px;
-    content: attr(data-placeholder);
-    pointer-events: none;
-    opacity: 0.7;
-
 }
