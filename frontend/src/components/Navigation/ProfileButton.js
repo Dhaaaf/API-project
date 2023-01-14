@@ -9,6 +9,8 @@ import './ProfileButton.css'
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
+    const [credential, setCredential] = useState("");
+    const [password, setPassword] = useState("");
     const ulRef = useRef();
 
     const openMenu = () => {
@@ -38,6 +40,14 @@ function ProfileButton({ user }) {
         closeMenu();
     };
 
+    const demoSignIn = (e) => {
+        e.preventDefault();
+        setPassword("password");
+        setCredential("demo@user.io");
+        dispatch(sessionActions.login({ credential, password }));
+        closeMenu();
+    }
+
     const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
     return (
@@ -59,22 +69,24 @@ function ProfileButton({ user }) {
                     </div>
 
                 ) : (
-
-                    <div className="log-in-sign-up">
-                        <div id="sign-up-modal">
-                            <OpenModalMenuItem
-                                itemText="Sign Up"
-                                onItemClick={closeMenu}
-                                modalComponent={<SignupFormModal />}
-                            />
+                    <div className="dropdown-menu">
+                        <div className="log-in-sign-up">
+                            <div id="sign-up-modal">
+                                <OpenModalMenuItem
+                                    itemText="Sign Up"
+                                    onItemClick={closeMenu}
+                                    modalComponent={<SignupFormModal />}
+                                />
+                            </div>
+                            <div id="log-in-modal">
+                                <OpenModalMenuItem
+                                    itemText="Log In"
+                                    onItemClick={closeMenu}
+                                    modalComponent={<LoginFormModal />}
+                                />
+                            </div>
                         </div>
-                        <div id="log-in-modal">
-                            <OpenModalMenuItem
-                                itemText="Log In"
-                                onItemClick={closeMenu}
-                                modalComponent={<LoginFormModal />}
-                            />
-                        </div>
+                        <button onClick={demoSignIn} type="submit" className='fantasybnb-button' id='demo-user-button'>Demo User</button>
                     </div>
                 )}
             </div>
