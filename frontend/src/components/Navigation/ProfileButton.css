@@ -69,6 +69,8 @@
     font-size: 14px;
     transition-property: all;
     cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
 }
 
 
