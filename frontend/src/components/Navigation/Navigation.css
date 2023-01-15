@@ -41,5 +41,28 @@
 .right-nav-div {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    width: 250px;
+    box-sizing: border-box;
+}
+
+.create-spot {
+    list-style: none;
+    padding-top: 10px;
+    margin-right: 27px;
+    /* border-top-left-radius: 30%;
+    border-bottom-left-radius: 30%;
+    border-top-right-radius: 30%;
+    border-bottom-right-radius: 30%; */
+    /* border-radius: 30% 30% 30% 30%; */
+    border-radius: 20% / 50%;
+    text-align: center;
+    height: 30px;
+    justify-content: center;
+    cursor: pointer;
+    width: 150px;
+}
+
+.create-spot:hover {
+    background-color: rgba(202, 202, 202, 0.25);
 }

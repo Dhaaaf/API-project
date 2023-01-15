@@ -3,8 +3,6 @@
     flex-direction: column;
     justify-content: space-between;
 
-    border: 1px solid rgba(165, 165, 165, 0.1);
-
     height: fit-content;
     width: 120px;
 
@@ -15,7 +13,7 @@
     top: 33px;
     right: 0px;
     background-color: white;
-    box-shadow: 3px 3px 3px rgba(165, 165, 165, 0.1);
+    /* box-shadow: 3px 3px 3px rgba(165, 165, 165, 0.1); */
 }
 
 .profile-button-container {
@@ -28,10 +26,11 @@
 
 .profile-button {
     background-color: #ffffff;
-    border: 1px solid #dddddd;
+    border: 0.1px solid #dddddd;
     border-radius: 20px;
     color: gray;
     font-size: 30px;
+    cursor: pointer;
 }
 
 .profile-button-bars-div {
