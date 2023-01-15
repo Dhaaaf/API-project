@@ -8,7 +8,7 @@ import "./UsersSpots.css"
 
 const preview = (image) => {
     if (image === "No preview image available") {
-        image = "https://screenrant.com/wp-content/uploads/2018/01/Lord-of-the-Rings-Rivendell-The-Hobbit-Galadriel-Gandalf-Elrond.jpg";
+        image = "https://curiocity.com/wp-content/uploads/2021/03/ezgif.com-webp-to-jpg.jpg";
         return image;
     } else {
         return image;

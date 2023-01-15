@@ -75,11 +75,12 @@
     display: flex;
     flex-direction: row;
     justify-content: left;
+    font-size: small;
 }
 
 .spot-card-middle {
     box-sizing: border-box;
-
+    padding-top: 33px;
     height: 40px;
     color: gray;
     font-size: 14px;
@@ -94,6 +95,7 @@
 .spot-price {
     font-weight: bold;
     padding-right: 5px;
+    font-weight: bold;
 }
 
 .spot-location {
