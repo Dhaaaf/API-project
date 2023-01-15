@@ -110,6 +110,11 @@
     background-color: rgb(227, 28, 95);
 }
 
+#my-spots-button {
+    margin-top: 5px;
+    height: 25px;
+}
+
 #logout-button {
     margin-top: 5px;
     height: 25px;

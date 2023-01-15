@@ -69,7 +69,6 @@
 .spot-card-header {
     display: flex;
     justify-content: space-between;
-    height: 30%;
 }
 
 .spot-card-footer {

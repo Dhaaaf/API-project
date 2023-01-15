@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import AllSpots from "./components/Spots/AllSpots";
+import UsersSpots from "./components/Spots/UsersSpots";
 
 import "./index.css"
 
@@ -24,6 +25,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <AllSpots />
+          </Route>
+          <Route exact path="/my-spots">
+            <UsersSpots />
           </Route>
         </Switch>
       )}
