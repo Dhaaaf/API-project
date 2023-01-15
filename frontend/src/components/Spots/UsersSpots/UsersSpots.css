@@ -79,7 +79,7 @@
 
 .spot-card-middle {
     box-sizing: border-box;
-
+    padding-top: 33px;
     height: 40px;
     color: gray;
     font-size: 14px;
