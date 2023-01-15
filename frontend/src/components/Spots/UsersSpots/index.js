@@ -8,7 +8,7 @@ import "./UsersSpots.css"
 
 const preview = (image) => {
     if (image === "No preview image available") {
-        image = "https://curiocity.com/wp-content/uploads/2021/03/ezgif.com-webp-to-jpg.jpg";
+        image = "https://assets.vogue.com/photos/598dacb5f0b0e21484d342ba/master/w_2560%2Cc_limit/00-lede-a-game-of-thrones-guide-to-dubrovnik-croatia.jpg";
         return image;
     } else {
         return image;
