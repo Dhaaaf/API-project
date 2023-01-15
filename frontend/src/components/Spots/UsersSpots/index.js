@@ -61,6 +61,9 @@ export default function UsersSpots() {
                                 <p className="spot-location">{spot.city}, {spot.state}</p>
                                 <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgRating)}</p>
                             </div>
+                            <div className="spot-card-middle">
+                                <p className="spot-name">{spot.name}</p>
+                            </div>
                             <div className="spot-card-footer">
                                 <p className="spot-price">${spot.price}</p>
                                 <p className="per-night">night</p>

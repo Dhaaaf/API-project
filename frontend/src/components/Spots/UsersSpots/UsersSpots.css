@@ -77,6 +77,19 @@
     justify-content: left;
 }
 
+.spot-card-middle {
+    box-sizing: border-box;
+
+    height: 40px;
+    color: gray;
+    font-size: 14px;
+    width: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
 
 .spot-price {
     font-weight: bold;
@@ -92,6 +105,7 @@
     justify-content: right;
     width: 60px;
     align-items: center;
+    padding-top: 8px;
 }
 
 #star {
