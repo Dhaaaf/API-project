@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import OpenModalMenuItem from './OpenModalMenuItem';
+import LoginFormModal from '../LoginFormModal';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -17,7 +19,19 @@ function Navigation({ isLoaded }) {
                 </div>
                 {isLoaded && (
                     <div className='right-nav-div'>
-                        <ProfileButton user={sessionUser} />
+                        {sessionUser && (
+                            <span className='create-spot'>
+                                <div>
+                                    <OpenModalMenuItem
+                                        itemText="Airbnb your home"
+                                        modalComponent={<LoginFormModal />}
+                                    />
+                                </div>
+                            </span>
+                        )}
+                        <div className='profile-button'>
+                            <ProfileButton user={sessionUser} />
+                        </div>
                     </div>
                 )}
             </div>
