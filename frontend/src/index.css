@@ -11,3 +11,7 @@
     height: 3rem;
     box-sizing: border-box;
 }
+
+.root {
+    padding: 0px 20px;
+}

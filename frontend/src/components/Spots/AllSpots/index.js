@@ -6,7 +6,7 @@ import "../Spots.css"
 
 const preview = (image) => {
     if (image === "No preview image available") {
-        image = "https://upload.wikimedia.org/wikipedia/commons/d/dc/No_Preview_image_2.png";
+        image = "https://screenrant.com/wp-content/uploads/2018/01/Lord-of-the-Rings-Rivendell-The-Hobbit-Galadriel-Gandalf-Elrond.jpg";
         return image;
     } else {
         return image;
@@ -29,7 +29,7 @@ export default function AllSpots() {
     console.log(spots)
 
     const onClick = (spotId) => {
-        history.push(`/spots/${spotId}`)
+        // history.push(`/spots/${spotId}`)
     }
 
     const rating = (rating) => {
@@ -55,7 +55,7 @@ export default function AllSpots() {
                         <div className="spot-card-bottom">
                             <div className="spot-card-header">
                                 <p className="spot-location">{spot.city}, {spot.state}</p>
-                                <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>{rating(spot.avgRating)}</p>
+                                <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgRating)}</p>
                             </div>
                             <div className="spot-card-footer">
                                 <p className="spot-price">${spot.price}</p>

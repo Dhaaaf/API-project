@@ -1,26 +1,55 @@
 .allSpots-div {
-    width: 100%;
+    display: flex;
     box-sizing: border-box;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 18px;
-    padding: 20px;
+    max-width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0px 40px;
+    padding-top: 15px;
 }
 
 .spot-card {
-    height: 450px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 7fr 1fr 1fr 1fr;
-    gap: 5px;
+    height: fit-content;
+    box-sizing: border-box;
+    width: 25%;
+    padding: 10px;
 }
 
 .spot-img {
     width: 100%;
-    height: 100%;
-    grid-column: 1 / 4;
+    height: 300px;
     overflow: hidden;
     border-radius: 20px;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .spot-card {
+        width: 33%;
+    }
+
+    .spot-image {
+        height: 350px;
+    }
+}
+
+@media (min-width: 551px) and (max-width: 767px) {
+    .spot-card {
+        width: 50%;
+    }
+
+    .spot-image {
+        height: 350px;
+    }
+}
+
+@media (max-width: 550px) {
+    .spot-card {
+        width: 100%;
+    }
+
+    .spot-image {
+        height: 350px;
+    }
 }
 
 .spot-previewimg {
@@ -30,10 +59,11 @@
 }
 
 .spot-card-bottom {
-    width: calc(100% - 16px);
-    padding: 8px;
-    grid-column: 1 / 4;
-    grid-row: 2 / 5;
+    width: 100%;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .spot-card-header {
@@ -41,12 +71,24 @@
     justify-content: space-between;
 }
 
+.spot-card-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+
 .spot-price {
     font-weight: bold;
+    padding-right: 5px;
 }
 
 .spot-location {
     font-weight: bold;
+}
+
+.spot-rating {
+    width: 60px
 }
 
 #star {
