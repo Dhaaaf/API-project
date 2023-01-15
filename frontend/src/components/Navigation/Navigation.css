@@ -61,8 +61,9 @@
     justify-content: center;
     cursor: pointer;
     width: 150px;
+    font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
 .create-spot:hover {
-    background-color: rgba(202, 202, 202, 0.25);
+    background-color: rgba(225, 225, 225, 0.25);
 }

@@ -6,6 +6,8 @@ import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormModal';
+
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -19,12 +21,21 @@ function Navigation({ isLoaded }) {
                 </div>
                 {isLoaded && (
                     <div className='right-nav-div'>
-                        {sessionUser && (
+                        {sessionUser ? (
                             <span className='create-spot'>
                                 <div>
                                     <OpenModalMenuItem
                                         itemText="Airbnb your home"
                                         modalComponent={<LoginFormModal />}
+                                    />
+                                </div>
+                            </span>
+                        ) : (
+                            <span className='create-spot'>
+                                <div>
+                                    <OpenModalMenuItem
+                                        itemText="Airbnb your home"
+                                        modalComponent={<SignupFormModal />}
                                     />
                                 </div>
                             </span>
