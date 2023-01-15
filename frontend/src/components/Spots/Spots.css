@@ -1,0 +1,55 @@
+.allSpots-div {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 18px;
+    padding: 20px;
+}
+
+.spot-card {
+    height: 450px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 7fr 1fr 1fr 1fr;
+    gap: 5px;
+}
+
+.spot-img {
+    width: 100%;
+    height: 100%;
+    grid-column: 1 / 4;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.spot-previewimg {
+    object-fit: cover;
+    width: 100%;
+    height: fill;
+}
+
+.spot-card-bottom {
+    width: calc(100% - 16px);
+    padding: 8px;
+    grid-column: 1 / 4;
+    grid-row: 2 / 5;
+}
+
+.spot-card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.spot-price {
+    font-weight: bold;
+}
+
+.spot-location {
+    font-weight: bold;
+}
+
+#star {
+    color: black;
+    height: 1px;
+}
