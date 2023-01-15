@@ -9,8 +9,6 @@ import './ProfileButton.css'
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
-    const [credential, setCredential] = useState("");
-    const [password, setPassword] = useState("");
     const ulRef = useRef();
 
     const openMenu = () => {
@@ -42,8 +40,8 @@ function ProfileButton({ user }) {
 
     const demoSignIn = (e) => {
         e.preventDefault();
-        setPassword("password");
-        setCredential("demo@user.io");
+        const password = "password"
+        const credential = "demo@user.io"
         dispatch(sessionActions.login({ credential, password }));
         closeMenu();
     }
