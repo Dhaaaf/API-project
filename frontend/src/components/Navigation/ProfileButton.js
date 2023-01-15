@@ -5,8 +5,10 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './ProfileButton.css'
+import { useHistory } from "react-router-dom";
 
 function ProfileButton({ user }) {
+    const history = useHistory();
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
@@ -34,9 +36,16 @@ function ProfileButton({ user }) {
 
     const logout = (e) => {
         e.preventDefault();
+        history.push('/')
         dispatch(sessionActions.logout());
         closeMenu();
     };
+
+    const mySpots = (e) => {
+        e.preventDefault();
+        history.push('/my-spots')
+        closeMenu();
+    }
 
     const demoSignIn = (e) => {
         e.preventDefault();
@@ -63,6 +72,7 @@ function ProfileButton({ user }) {
                         <p>{user.username}</p>
                         <p>{user.firstName} {user.lastName}</p>
                         <p>{user.email}</p>
+                        <button onClick={mySpots} className='fantasybnb-button' id="my-spots-button">My Spots</button>
                         <button onClick={logout} className='fantasybnb-button' id='logout-button'>Log Out</button>
                     </div>
 

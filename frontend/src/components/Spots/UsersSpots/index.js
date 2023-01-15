@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { thunkGetAllSpots } from "../../../store/spots";
-import "./AllSpots.css"
+import { thunkGetUsersSpots } from "../../../store/spots";
+import "./UsersSpots.css"
+
+
 
 const preview = (image) => {
     if (image === "No preview image available") {
@@ -13,13 +15,15 @@ const preview = (image) => {
     }
 }
 
-export default function AllSpots() {
+export default function UsersSpots() {
     const dispatch = useDispatch();
     const history = useHistory();
     const allSpots = useSelector(state => state.spots.spots);
 
+    const user = useSelector(state => state.session.user);
+
     useEffect(() => {
-        dispatch(thunkGetAllSpots())
+        dispatch(thunkGetUsersSpots())
     }, [dispatch])
 
 
