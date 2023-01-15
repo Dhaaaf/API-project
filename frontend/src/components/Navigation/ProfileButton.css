@@ -31,6 +31,7 @@
     color: gray;
     font-size: 30px;
     cursor: pointer;
+    margin-bottom: 0;
 }
 
 .profile-button-bars-div {
