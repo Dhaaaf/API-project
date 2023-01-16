@@ -14,8 +14,8 @@ export default function CreateSpotForm() {
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [country, setCountry] = useState("");
-    const [lat, setLat] = useState("");
-    const [lng, setLng] = useState("");
+    // const [lat, setLat] = useState("");
+    // const [lng, setLng] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
@@ -41,13 +41,13 @@ export default function CreateSpotForm() {
             errors.push("Country is required.");
         }
 
-        if (lat && !lat.length) {
-            errors.push("Latitude is required.");
-        }
+        // if (lat && !lat.length) {
+        //     errors.push("Latitude is required.");
+        // }
 
-        if (lng && !lng.length) {
-            errors.push("Longitude is required.")
-        }
+        // if (lng && !lng.length) {
+        //     errors.push("Longitude is required.")
+        // }
 
         if (name && !name.length) {
             errors.push("Name is required.")
@@ -66,11 +66,14 @@ export default function CreateSpotForm() {
         }
 
         setErrors(errors);
-    }, [address, city, state, country, lat, lng, name, description, price]);
+    }, [address, city, state, country, name, description, price]);
 
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        const lat = 13;
+        const lng = 4;
 
         const newSpot = {
             address,
@@ -171,7 +174,7 @@ export default function CreateSpotForm() {
                     </label>
                 </div>
 
-                <div className="entries">
+                {/* <div className="entries">
                     <input
                         id="lat"
                         type="number"
@@ -195,7 +198,7 @@ export default function CreateSpotForm() {
                     <label htmlFor="lng">
                         Longitude
                     </label>
-                </div>
+                </div> */}
 
                 <div className="entries">
                     <input
@@ -206,7 +209,7 @@ export default function CreateSpotForm() {
                         required
                     />
                     <label htmlFor="name">
-                        Name
+                        Spot Name
                     </label>
                 </div>
 
