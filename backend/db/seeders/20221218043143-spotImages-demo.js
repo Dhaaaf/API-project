@@ -36,7 +36,7 @@ module.exports = {
       },
       {
         spotId: 4,
-        url: "https://static.wikia.nocookie.net/middlearthfilmseries/images/8/8c/EreborThroneRoom.jpg/revision/latest?cb=20171003005845",
+        url: "https://images.alphacoders.com/117/1173574.jpg",
         preview: true
       },
       {
