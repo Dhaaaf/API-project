@@ -18,7 +18,7 @@ function Navigation({ isLoaded }) {
         <div className='navigation-bar'>
             <div className='nav-innerdiv'>
                 <div className='left-nav-div'>
-                    <NavLink exact to="/" className="home-link"><i className="fa-brands fa-fort-awesome"></i></NavLink>
+                    <NavLink exact to="/" className="home-link"><i class="fa-solid fa-dragon"></i></NavLink>
                 </div>
                 {isLoaded && (
                     <div className='right-nav-div'>
