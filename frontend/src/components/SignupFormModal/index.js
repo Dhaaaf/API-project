@@ -33,7 +33,7 @@ function SignupFormModal() {
         <>
             <div className="form-div">
                 <h1 className="title">Sign Up</h1>
-                <h3 className="mini-title">Welcome to Fantasybnb</h3>
+                <h3 className="mini-title">Welcome to AirDnD</h3>
                 <ul className="errors">
                     {errors.map((error, idx) => (
                         <li key={idx}>{error}</li>

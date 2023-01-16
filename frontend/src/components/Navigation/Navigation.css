@@ -48,9 +48,11 @@
 
 .create-spot {
     list-style: none;
+    padding-left: 5px;
+    padding-right: 5px;
     padding-top: 10px;
     margin-right: 27px;
-    border-radius: 20% / 50%;
+    border-radius: 15px;
     text-align: center;
     height: 30px;
     justify-content: center;
