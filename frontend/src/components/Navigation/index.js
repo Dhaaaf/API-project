@@ -7,6 +7,7 @@ import './Navigation.css';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import CreateSpotForm from '../Spots/CreateSpot';
 
 
 function Navigation({ isLoaded }) {
@@ -25,8 +26,8 @@ function Navigation({ isLoaded }) {
                             <span className='create-spot'>
                                 <div>
                                     <OpenModalMenuItem
-                                        itemText="Airbnb your home"
-                                        modalComponent={<LoginFormModal />}
+                                        itemText="Airdnd your home"
+                                        modalComponent={<CreateSpotForm />}
                                     />
                                 </div>
                             </span>
@@ -34,7 +35,7 @@ function Navigation({ isLoaded }) {
                             <span className='create-spot'>
                                 <div>
                                     <OpenModalMenuItem
-                                        itemText="Airbnb your home"
+                                        itemText="Airdnd your home"
                                         modalComponent={<SignupFormModal />}
                                     />
                                 </div>
