@@ -73,7 +73,7 @@ input:valid+label {
 
 input:focus {
     outline: 0;
-    border-bottom: 2px solid #ff5a5f;
+    /* border-bottom: 2px solid #ff5a5f; */
 }
 
 .submit-button {
