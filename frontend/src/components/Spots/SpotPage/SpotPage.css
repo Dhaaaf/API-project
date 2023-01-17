@@ -15,6 +15,7 @@
     font-size: 26px;
     margin-top: 10px;
     margin-bottom: 0px;
+    font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
 .header {
@@ -49,20 +50,49 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    align-items: center;
     width: 170px;
     box-sizing: border-box;
-    height: 50px;
+    height: auto;
 }
+
 
 .edit-modal {
     box-sizing: border-box;
     text-align: center;
     cursor: pointer;
-    height: auto;
     text-decoration: underline;
     list-style: none;
     width: 80px;
-    border: 1px solid red
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.edit-modal:hover {
+    background-color: rgba(225, 225, 225, 0.25);
+}
+
+.delete-modal {
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+    list-style: none;
+    width: 80px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.delete-modal:hover {
+    background-color: rgba(225, 225, 225, 0.25);
 }
 
 .delete {
@@ -123,4 +153,14 @@
 #pic-4 {
     padding-left: 3px;
     padding-bottom: 3px;
+}
+
+.owner-info {
+    font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
+    margin-bottom: 0;
+}
+
+.rooms-etc {
+    margin-top: 8px;
+    font-size: 17px;
 }

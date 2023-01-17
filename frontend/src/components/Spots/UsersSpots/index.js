@@ -33,7 +33,7 @@ export default function UsersSpots() {
     console.log(spots)
 
     const onClick = (spotId) => {
-        // history.push(`/spots/${spotId}`)
+        history.push(`/spots/${spotId}`)
     }
 
     const rating = (rating) => {
@@ -48,12 +48,12 @@ export default function UsersSpots() {
         <div className="allSpots-div">
             {spots && (
                 spots.map((spot) => (
-                    < div key={spot.id} className="spot-card" >
+                    < div key={spot.id} className="spot-card"
+                        onClick={() => onClick(spot.id)}>
                         <div className="spot-img">
                             <img
                                 className="spot-previewimg"
                                 src={preview(spot.previewImage)}
-                                onClick={() => onClick(spot.id)}
                             />
                         </div>
                         <div className="spot-card-bottom">
