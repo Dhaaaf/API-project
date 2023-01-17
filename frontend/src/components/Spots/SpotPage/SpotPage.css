@@ -132,6 +132,16 @@
     box-sizing: border-box;
 }
 
+@media (max-width: 734px) {
+    .big-picture {
+        width: 100%;
+    }
+
+    .small-picture {
+        display: none;
+    }
+}
+
 #pic-1 {
     padding-left: 3px;
     padding-right: 3px;

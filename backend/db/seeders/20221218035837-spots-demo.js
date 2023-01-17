@@ -93,8 +93,8 @@ module.exports = {
       {
         ownerId: 1,
         address: '33 Dragon Stone',
-        city: 'Blackwater Bay',
-        state: 'Dragonstone',
+        city: 'Dragonstone',
+        state: 'Blackwater Bay',
         country: 'Westeros',
         lat: 33.89,
         lng: 47.22,

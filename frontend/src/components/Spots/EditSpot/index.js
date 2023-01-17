@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 import { thunkEditSpot, thunkGetSingleSpot } from "../../../store/spots";
 import { useModal } from "../../../context/Modal";
 import "./EditSpot.css"
@@ -61,6 +61,7 @@ export default function EditSpotForm(spot) {
         setErrors(errors);
     }, [address, city, state, country, name, description, price]);
 
+    const redirect = () => history.push(`/spots/${spot.id}`)
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -85,6 +86,7 @@ export default function EditSpotForm(spot) {
                 if (data && data.errors) setErrors(data.errors);
             })
         closeModal();
+        redirect();
     }
 
 
