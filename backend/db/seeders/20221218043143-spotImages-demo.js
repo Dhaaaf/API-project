@@ -21,17 +21,17 @@ module.exports = {
     return queryInterface.bulkInsert(options, [
       {
         spotId: 1,
-        url: "https://static.wikia.nocookie.net/lotr/images/e/e3/Lonely_Mountain_-_DoS.jpg/revision/latest?cb=20200317224945",
+        url: "https://wallpaperaccess.com/full/2389451.jpg",
         preview: true
       },
       {
         spotId: 2,
-        url: "https://i.imgur.com/WHhQJhE.jpg",
+        url: "https://c4.wallpaperflare.com/wallpaper/241/251/757/the-lord-of-the-rings-gandalf-minas-tirith-movies-wallpaper-preview.jpg",
         preview: true
       },
       {
         spotId: 3,
-        url: "https://static.wikia.nocookie.net/middle-earth-film-saga/images/b/b6/Vlcsnap-2013-05-19-19h49m07s0_%281%29.png/revision/latest?cb=20190731030519",
+        url: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Baggins_residence_%27Bag_End%27.jpg/1200px-Baggins_residence_%27Bag_End%27.jpg",
         preview: true
       },
       {
