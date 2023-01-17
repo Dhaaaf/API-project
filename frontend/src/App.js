@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import AllSpots from "./components/Spots/AllSpots";
 import UsersSpots from "./components/Spots/UsersSpots";
+import SpotPage from "./components/Spots/SpotPage";
 
 import "./index.css"
 
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route exact path="/my-spots">
             <UsersSpots />
+          </Route>
+          <Route exact path="/spots/:spotId">
+            <SpotPage />
           </Route>
         </Switch>
       )}

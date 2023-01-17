@@ -29,7 +29,7 @@ export default function AllSpots() {
     console.log(spots)
 
     const onClick = (spotId) => {
-        // history.push(`/spots/${spotId}`)
+        history.push(`/spots/${spotId}`)
     }
 
     const rating = (rating) => {
