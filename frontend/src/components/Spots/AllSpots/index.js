@@ -26,7 +26,6 @@ export default function AllSpots() {
     const spots = [];
     Object.values(allSpots).forEach(spot => spots.push(spot))
     if (!spots.length) return null
-    console.log(spots)
 
     const onClick = (spotId) => {
         history.push(`/spots/${spotId}`)
@@ -44,7 +43,8 @@ export default function AllSpots() {
         <div className="allSpots-div">
             {spots && (
                 spots.map((spot) => (
-                    < div key={spot.id} className="spot-card" >
+                    < div key={spot.id} className="spot-card"
+                        onClick={() => onClick(spot.id)} >
                         <div className="spot-img">
                             <img
                                 className="spot-previewimg"

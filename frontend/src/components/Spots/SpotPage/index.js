@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkGetSingleSpot } from "../../../store/spots";
 import EditSpotForm from "../EditSpot";
+import DeleteSpotForm from "../DeleteSpot";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 import "./SpotPage.css"
@@ -75,7 +76,13 @@ export default function SpotPage() {
                                 modalComponent={<EditSpotForm spot={spot} />}
                             />
                         </div>
-                        <p className="delete" ><i className="fa-solid fa-square-minus"></i>Delete</p>
+                        <div className="delete-modal">
+                            <i className="fa-solid fa-square-minus"></i>
+                            <OpenModalMenuItem
+                                itemText="Delete"
+                                modalComponent={<DeleteSpotForm spot={spot} />}
+                            />
+                        </div>
                     </div>
                 )}
             </div>
@@ -90,7 +97,7 @@ export default function SpotPage() {
             </div>
             <div className="spot-info">
                 <h2 className="owner-info">Hosted by {spot.Owner.firstName}</h2>
-                <p>{randomNum(2, 9)} guests | {randomNum(2, 9)} bedrooms | {randomNum(2, 9)} beds | {randomNum(2, 9)} baths</p>
+                <p className="rooms-etc">{randomNum(2, 9)} guests | {randomNum(2, 9)} bedrooms | {randomNum(2, 9)} beds | {randomNum(2, 9)} baths</p>
             </div>
         </div>
     )

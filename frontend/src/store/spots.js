@@ -141,7 +141,7 @@ export const thunkDeleteSpot = (spotId) => async (dispatch) => {
 }
 
 export const thunkAddSpotImg = (spotId, url, preview) => async (dispatch) => {
-    const res = await csrfFetch(`api/spots/${spotId}/images`, {
+    const res = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

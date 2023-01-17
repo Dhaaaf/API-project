@@ -1,0 +1,37 @@
+.form-div {
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+}
+
+.errors {
+    list-style-type: none;
+    font-size: 12px;
+    padding: 5px;
+    color: #ff5a5f;
+}
+
+.title {
+    font-family: Roboto, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.form {
+    width: 90%;
+}
+
+.submit-button {
+    background-color: rgb(227, 28, 95);
+    width: 102%;
+    border: none;
+    border-radius: 5px;
+    height: 48px;
+    color: white;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 15px;
+}
