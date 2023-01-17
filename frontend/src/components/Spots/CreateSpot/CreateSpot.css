@@ -54,7 +54,7 @@ label {
     align-items: center;
     cursor: text;
     padding: 2px;
-    padding-left: 8px;
+    padding-left: 4px;
     font-family: Roboto, Helvetica, sans-serif;
     font-size: 13px;
     transition: 0.2s ease-in-out;
