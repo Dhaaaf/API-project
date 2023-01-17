@@ -14,11 +14,15 @@ export default function SpotPage() {
 
     const user = useSelector(state => state.session.user)
 
-    const spot = useSelector(state => state.spots.singleSpot[spotId])
+    const spot = useSelector(state => state.spots.singleSpot)
 
     useEffect(() => {
         dispatch(thunkGetSingleSpot(spotId))
     }, [dispatch, user])
+
+
+    if (spot === {}) return null
+    if (Object.values(spot).length === 0) return null
 
 
     let owner
@@ -53,7 +57,6 @@ export default function SpotPage() {
     function randomNum(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
     }
-
 
 
     return spot && (
