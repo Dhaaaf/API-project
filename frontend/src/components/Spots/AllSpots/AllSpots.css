@@ -6,7 +6,7 @@
     flex-wrap: wrap;
     padding: 0px 40px;
     padding-top: 15px;
-    font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
+    font-family: Roboto, Helvetica, sans-serif;
 }
 
 .spot-card {
@@ -73,6 +73,10 @@
     height: 30%;
 }
 
+.spot-location {
+    font-weight: bolder;
+}
+
 .spot-card-footer {
     display: flex;
     flex-direction: row;
@@ -84,13 +88,14 @@
     padding-top: 33px;
     height: 40px;
     color: gray;
-    font-size: 14px;
+    font-size: 12px;
     width: 100px;
     display: flex;
     flex-direction: row;
     justify-content: left;
     align-items: center;
 }
+
 
 
 .spot-price {
