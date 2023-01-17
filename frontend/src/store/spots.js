@@ -178,33 +178,40 @@ const normalize = (spots) => {
 
 
 export default function spotReducer(state = initialState, action) {
-    const newState = { ...state }
     switch (action.type) {
         case GET_ALL_SPOTS: {
+            const newState = { ...state }
             newState.spots = normalize(action.spots)
             return newState
         }
         case GET_USERS_SPOTS: {
+            const newState = { ...state }
             newState.spots = normalize(action.spots)
             return newState
         }
         case GET_SINGLE_SPOT: {
-            newState.singleSpot = { ...state.singleSpot, [action.spot.id]: action.spot }
+            const newState = { ...state }
+            newState.singleSpot = action.spot
             return newState
         }
         case ADD_SPOT: {
+            const newState = { ...state }
             newState.spots = { ...state.spots, [action.spot.id]: action.spot }
             return newState
         }
         case EDIT_SPOT: {
+            const newState = { ...state }
             newState.spots = { ...state.spots, [action.spotId]: action.spot }
+            newState.singleSpot = { ...state.singleSpot, ...action.spot }
             return newState
         }
         case DELETE_SPOT: {
+            const newState = { ...state }
             delete newState.spots[action.spotId]
             return newState
         }
         case ADD_IMAGE: {
+            const newState = { ...state }
             newState.spots = { ...state.spots, [action.spotId.previewImage]: action.url }
         }
         default:
