@@ -168,6 +168,7 @@ const initialState = {
     singleSpot: {}
 }
 
+
 const normalize = (spots) => {
     const data = {};
 
