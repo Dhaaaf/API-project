@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkGetSingleSpot } from "../../../store/spots";
-import OpenModalButton from "../../OpenModalButton";
 import EditSpotForm from "../EditSpot";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
@@ -18,7 +17,7 @@ export default function SpotPage() {
 
     useEffect(() => {
         dispatch(thunkGetSingleSpot(spotId))
-    }, [dispatch, spotId, user])
+    }, [dispatch, user])
 
 
     let owner
@@ -70,13 +69,11 @@ export default function SpotPage() {
                 {owner && (
                     <div className="header-right">
                         <div className="edit-modal">
-                            <span>
-                                <i className="fa-solid fa-pen-to-square"></i>
-                                <OpenModalMenuItem
-                                    itemText="Edit"
-                                    modalComponent={<EditSpotForm spot={spot} />}
-                                />
-                            </span>
+                            <i className="fa-solid fa-pen-to-square"></i>
+                            <OpenModalMenuItem
+                                itemText="Edit"
+                                modalComponent={<EditSpotForm spot={spot} />}
+                            />
                         </div>
                         <p className="delete" ><i className="fa-solid fa-square-minus"></i>Delete</p>
                     </div>

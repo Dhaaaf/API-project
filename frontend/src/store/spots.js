@@ -113,7 +113,7 @@ export const thunkAddSpot = (spot) => async (dispatch) => {
 }
 
 export const thunkEditSpot = (spotId, spot) => async (dispatch) => {
-    const res = await csrfFetch(`api/spots/${spotId}`, {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
@@ -129,7 +129,7 @@ export const thunkEditSpot = (spotId, spot) => async (dispatch) => {
 }
 
 export const thunkDeleteSpot = (spotId) => async (dispatch) => {
-    const res = await csrfFetch(`api/spots/${spotId}`, {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
         method: 'DELETE'
     })
 

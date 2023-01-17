@@ -6,7 +6,10 @@
     padding: 0px 40px;
     padding-top: 15px;
     font-family: Roboto, Helvetica, sans-serif;
+    max-width: 1200px;
+    margin: auto;
 }
+
 
 .spot-name-title {
     font-size: 26px;
@@ -58,6 +61,8 @@
     height: auto;
     text-decoration: underline;
     list-style: none;
+    width: 80px;
+    border: 1px solid red
 }
 
 .delete {
@@ -112,8 +117,10 @@
 #pic-3 {
     padding-left: 3px;
     padding-right: 3px;
+    padding-bottom: 3px;
 }
 
 #pic-4 {
     padding-left: 3px;
+    padding-bottom: 3px;
 }

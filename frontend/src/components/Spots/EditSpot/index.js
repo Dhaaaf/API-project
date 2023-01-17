@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { thunkEditSpot } from "../../../store/spots";
+import { thunkEditSpot, thunkGetSingleSpot } from "../../../store/spots";
 import { useModal } from "../../../context/Modal";
 import "./EditSpot.css"
 
@@ -84,10 +84,8 @@ export default function EditSpotForm(spot) {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
             })
-
+        // history.push(`/spots/${spot.id}`);
         closeModal();
-        history.push(`/spots/${spot.id}`);
-
     }
 
 
