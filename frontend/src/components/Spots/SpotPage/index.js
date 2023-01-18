@@ -136,74 +136,76 @@ export default function SpotPage() {
                 <p className="rooms-etc">{randomNum(2, 9)} guests | {randomNum(2, 9)} bedrooms | {randomNum(2, 9)} beds | {randomNum(2, 9)} baths</p>
                 <p className="spot-description">{spot.description}</p>
             </div>
-            {
-                (
-                    <div className="spot-page-review-container">
-                        <div className="spot-reviews-header">
-                            <div className="spot-reviews-header-left">
-                                {typeof spot.avgStarRating === "number" ? (
-                                    <h2 className="header-left"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgStarRating).toFixed(1)}</h2>
-                                ) : (
-                                    <h2 className="header-left"><i className="fa-solid fa-star" id="star"></i>   New</h2>
+            <div className="spot-page-review-container">
+                <div className="spot-reviews-header">
+                    <div className="spot-reviews-header-left">
+                        {typeof spot.avgStarRating === "number" ? (
+                            <h2 className="header-left"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgStarRating).toFixed(1)}</h2>
+                        ) : (
+                            <h2 className="header-left"><i className="fa-solid fa-star" id="star"></i>   New</h2>
 
-                                )}
-                                {spot.numReviews === 1 ? (
-                                    <h2 className="spot-reviews-number">{spot.numReviews} review</h2>
+                        )}
+                        <h2 className="header-left-space">|</h2>
+                        {spot.numReviews === 1 ? (
+                            <h2 className="spot-reviews-number">{spot.numReviews} review</h2>
 
-                                ) : (
-                                    <h2 className="spot-reviews-number">{spot.numReviews} reviews</h2>
-                                )}
+                        ) : (
+                            <h2 className="spot-reviews-number">{spot.numReviews} reviews</h2>
+                        )}
+                    </div>
+                    {
+                        user && user.id !== spot.ownerId && (
+                            <div className="spot-reviews-header-right">
+                                <i className="fa-solid fa-scroll" id="leave-review-icon"></i>
+                                <OpenModalMenuItem
+                                    itemText="Leave a Review"
+                                    modalComponent={<CreateReview spot={spot} />}
+                                />
                             </div>
-                            {
-                                user && user.id !== spot.ownerId && (
-                                    <div className="spot-reviews-header-right">
-                                        <i class="fa-solid fa-scroll"></i>
-                                        <OpenModalMenuItem
-                                            itemText="Leave a Review"
-                                            modalComponent={<CreateReview spot={spot} />}
-                                        />
-                                    </div>
-                                )
-                            }
-                        </div>
+                        )
+                    }
+                </div>
 
-                        <div className="spot-reviews">
-                            {reviews && (
-                                <div>
-                                    {spot.numReviews === 0 ? (
-                                        <div className="spots-review-div">No reviews for this spot yet!</div>
-                                    ) : (
-                                        <div className="spots-review-div">
-                                            {Object.values(reviews).map((review) => (
-                                                review.User && (
-                                                    <div key={review.id} className="review-spots-card">
-                                                        <div className="spots-review-card-top-div">
-                                                            <div className="spots-review-top-left">
-                                                                <p className="review-user-name">{review.User.firstName}</p>
-                                                                {convertDate(review.createdAt)}
-                                                            </div>
-                                                            {user && user.id === review.userId && (
-                                                                <div className="spots-review-top-right">
-                                                                    <OpenModalMenuItem
-                                                                        itemText="Delete"
-                                                                        modalComponent={<DeleteReviewForm review={review} />}
-                                                                    />
-                                                                </div>
-                                                            )}
+                <div className="spot-reviews">
+                    {reviews && (
+                        <div>
+                            {spot.numReviews === 0 ? (
+                                <div className="spots-review-div">No reviews for this spot yet!</div>
+                            ) : (
+                                <div className="spots-review-div">
+                                    {Object.values(reviews).map((review) => (
+                                        review.User && (
+                                            <div key={review.id} className="review-spots-card">
+                                                <div className="spots-review-card-top-div">
+                                                    <div className="spots-review-top-left">
+                                                        <i class="fa-solid fa-user" id="user-logo-review"></i>
+                                                        <div className="review-name-date">
+                                                            <p className="review-user-name">{review.User.firstName}</p>
+                                                            <p className="review-date">{convertDate(review.createdAt)}</p>
                                                         </div>
-                                                        <p className="review-spots-text">{review.review}</p>
                                                     </div>
-                                                )
-                                            ))}
-                                        </div>
-                                    )}
+                                                    {user && user.id === review.userId && (
+                                                        <div className="spots-review-top-right">
+                                                            <i className="fa-solid fa-square-minus"></i>
+
+                                                            <OpenModalMenuItem
+                                                                itemText="Delete"
+                                                                modalComponent={<DeleteReviewForm review={review} />}
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <p className="review-spots-text">{review.review}</p>
+                                            </div>
+                                        )
+                                    ))}
                                 </div>
                             )}
                         </div>
-                    </div>
+                    )}
+                </div>
+            </div>
 
-                )
-            }
         </div>
     )
 }
