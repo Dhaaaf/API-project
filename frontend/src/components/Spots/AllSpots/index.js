@@ -55,7 +55,12 @@ export default function AllSpots() {
                         <div className="spot-card-bottom">
                             <div className="spot-card-header">
                                 <p className="spot-location">{spot.city}, {spot.state}</p>
-                                <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgRating)}</p>
+                                {typeof spot.avgRating === "number" ? (
+                                    <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgRating).toFixed(1)}</p>
+                                ) : (
+                                    <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>   New</p>
+
+                                )}
                             </div>
                             <div className="spot-card-middle">
                                 <p className="spot-name">{spot.name}</p>

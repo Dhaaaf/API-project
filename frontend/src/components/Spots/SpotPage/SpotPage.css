@@ -174,3 +174,9 @@
     margin-top: 8px;
     font-size: 17px;
 }
+
+
+.spot-reviews-header-right {
+    list-style: none;
+    cursor: pointer;
+}

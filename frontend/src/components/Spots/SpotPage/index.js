@@ -6,6 +6,7 @@ import EditSpotForm from "../EditSpot";
 import DeleteSpotForm from "../DeleteSpot";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import SpotReviews from "../../Reviews/SpotReviews";
+import CreateReview from "../../Reviews/CreateReview";
 
 
 import "./SpotPage.css"
@@ -16,10 +17,11 @@ export default function SpotPage() {
 
     const user = useSelector(state => state.session.user)
     const spot = useSelector(state => state.spots.singleSpot)
+    const reviews = useSelector(state => state.reviews.spotReviews)
 
     useEffect(() => {
         dispatch(thunkGetSingleSpot(spotId))
-    }, [dispatch, user])
+    }, [dispatch, user, reviews])
 
 
     if (spot === {}) return null
@@ -65,7 +67,12 @@ export default function SpotPage() {
             <h1 className="spot-name-title">{spot.name}</h1>
             <div className="header">
                 <div className="header-left">
-                    <p className="header-left"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgStarRating)}</p>
+                    {typeof spot.avgStarRating === "number" ? (
+                        <p className="header-left"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgStarRating).toFixed(1)}</p>
+                    ) : (
+                        <p className="header-left"><i className="fa-solid fa-star" id="star"></i>   New</p>
+
+                    )}
                     <p className="header-left">|</p>
                     {spot.numReviews === 1 ? (
                         <p className="header-left" id="num-reviews">{spot.numReviews} review</p>
@@ -110,20 +117,38 @@ export default function SpotPage() {
                 <p className="spot-description">{spot.description}</p>
             </div>
             {
-                spot.numReviews > 0 && (
+                (
                     <div className="spot-page-review-container">
                         <div className="spot-reviews-header">
-                            <h2 className="spot-reviews-star-rating"><i className="fa-solid fa-star" id="star"></i>{spot.avgStarRating}</h2>
-                            {spot.numReviews === 1 ? (
-                                <h2 className="spot-reviews-number">{spot.numReviews} review</h2>
+                            <div className="spot-reviews-header-left">
+                                {typeof spot.avgStarRating === "number" ? (
+                                    <h2 className="header-left"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgStarRating).toFixed(1)}</h2>
+                                ) : (
+                                    <h2 className="header-left"><i className="fa-solid fa-star" id="star"></i>   New</h2>
 
-                            ) : (
-                                <h2 className="spot-reviews-number">{spot.numReviews} reviews</h2>
-                            )}
+                                )}
+                                {spot.numReviews === 1 ? (
+                                    <h2 className="spot-reviews-number">{spot.numReviews} review</h2>
+
+                                ) : (
+                                    <h2 className="spot-reviews-number">{spot.numReviews} reviews</h2>
+                                )}
+                            </div>
+                            {
+                                user && user.id !== spot.ownerId && (
+                                    <div className="spot-reviews-header-right">
+                                        <i class="fa-solid fa-scroll"></i>
+                                        <OpenModalMenuItem
+                                            itemText="Leave a Review"
+                                            modalComponent={<CreateReview spot={spot} />}
+                                        />
+                                    </div>
+                                )
+                            }
                         </div>
 
                         <div className="spot-reviews">
-                            <SpotReviews spot={spot} user={user} />
+                            <SpotReviews user={user} />
                         </div>
                     </div>
 
