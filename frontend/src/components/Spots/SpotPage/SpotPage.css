@@ -202,6 +202,11 @@
     border-bottom: 1px solid rgba(165, 165, 165, 0.4);
 }
 
+.spot-description {
+    font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
+    font-size: 20px;
+}
+
 .spot-page-review-container {
     padding-top: 3px;
     width: 100%;
