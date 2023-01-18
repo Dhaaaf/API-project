@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { thunkGetSingleSpot } from "../../../store/spots";
+import { thunkGetSingleSpot, thunkAddSpotImg } from "../../../store/spots";
 import { thunkGetSpotReviews } from "../../../store/reviews";
 import EditSpotForm from "../EditSpot";
 import DeleteSpotForm from "../DeleteSpot";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import CreateReview from "../../Reviews/CreateReview";
 import DeleteReviewForm from "../../Reviews/DeleteReview";
+import AddSpotImageForm from "../AddSpotImg";
 
 
 import "./SpotPage.css"
@@ -19,6 +20,7 @@ export default function SpotPage() {
     const user = useSelector(state => state.session.user)
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = useSelector(state => state.reviews.spotReviews)
+
 
     useEffect(() => {
         dispatch(thunkGetSingleSpot(spotId))
@@ -122,6 +124,13 @@ export default function SpotPage() {
                 </div>
                 {owner && (
                     <div className="header-right">
+                        <div className="add-img-modal">
+                            <i class="fa-regular fa-image"></i>
+                            <OpenModalMenuItem
+                                itemText="+Img"
+                                modalComponent={<AddSpotImageForm spot={spot} />}
+                            />
+                        </div>
                         <div className="edit-modal">
                             <i className="fa-solid fa-pen-to-square"></i>
                             <OpenModalMenuItem

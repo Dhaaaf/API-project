@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { thunkAddSpot, thunkAddSpotImg } from "../../../store/spots";
+import { thunkAddSpot, thunkAddPreviewImg } from "../../../store/spots";
 import { useModal } from "../../../context/Modal";
 import "./CreateSpot.css"
 
@@ -98,7 +98,7 @@ export default function CreateSpotForm() {
             })
 
 
-        const previewImg = await dispatch(thunkAddSpotImg(createdSpot.id, url, true))
+        const previewImg = await dispatch(thunkAddPreviewImg(createdSpot.id, url, true))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);
