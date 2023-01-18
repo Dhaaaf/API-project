@@ -71,7 +71,7 @@ function ProfileButton({ user }) {
                     <div className="profile-info-actions">
                         <p>{user.username}</p>
                         <p>{user.firstName} {user.lastName}</p>
-                        <p>{user.email}</p>
+                        <p id="profile-email">{user.email}</p>
                         <button onClick={mySpots} className='fantasybnb-button' id="my-spots-button">My Spots</button>
                         <button onClick={logout} className='fantasybnb-button' id='logout-button'>Log Out</button>
                     </div>
@@ -93,8 +93,8 @@ function ProfileButton({ user }) {
                                     modalComponent={<LoginFormModal />}
                                 />
                             </div>
+                            <button onClick={demoSignIn} type="submit" className='fantasybnb-button' id='demo-user-button'>Demo User</button>
                         </div>
-                        <button onClick={demoSignIn} type="submit" className='fantasybnb-button' id='demo-user-button'>Demo User</button>
                     </div>
                 )}
             </div>

@@ -81,6 +81,23 @@ export default function SpotPage() {
         )
     }
 
+    // console.log("reviews......", Object.values(reviews))
+    let noUserReview = true;
+
+    if (reviews) {
+        console.log("user.....", user)
+        console.log("reviews.....", reviews)
+        const reviewArr = Object.values(reviews)
+
+        if (user) {
+            for (let review of reviewArr) {
+                if (review.userId === user.id) noUserReview = false
+            }
+        }
+
+    }
+
+
 
     return spot && (
         <div className="spotPage-div">
@@ -154,7 +171,7 @@ export default function SpotPage() {
                         )}
                     </div>
                     {
-                        user && user.id !== spot.ownerId && (
+                        user && user.id !== spot.ownerId && noUserReview && (
                             <div className="spot-reviews-header-right">
                                 <i className="fa-solid fa-scroll" id="leave-review-icon"></i>
                                 <OpenModalMenuItem
