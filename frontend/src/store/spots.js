@@ -66,7 +66,7 @@ export const actionAddSpotImg = (spotId, url, preview) => {
 
 
 
-/// Thunks
+// Thunks
 export const thunkGetAllSpots = () => async (dispatch) => {
     const res = await csrfFetch("/api/spots")
     if (res.ok) {

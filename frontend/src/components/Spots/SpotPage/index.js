@@ -5,6 +5,8 @@ import { thunkGetSingleSpot } from "../../../store/spots";
 import EditSpotForm from "../EditSpot";
 import DeleteSpotForm from "../DeleteSpot";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import SpotReviews from "../../Reviews/SpotReviews";
+
 
 import "./SpotPage.css"
 
@@ -13,7 +15,6 @@ export default function SpotPage() {
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.session.user)
-
     const spot = useSelector(state => state.spots.singleSpot)
 
     useEffect(() => {
@@ -64,9 +65,14 @@ export default function SpotPage() {
             <h1 className="spot-name-title">{spot.name}</h1>
             <div className="header">
                 <div className="header-left">
-                    <p className="header-left"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgRating)}</p>
+                    <p className="header-left"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgStarRating)}</p>
                     <p className="header-left">|</p>
-                    <p className="header-left" id="num-reviews">{spot.numReviews} reviews</p>
+                    {spot.numReviews === 1 ? (
+                        <p className="header-left" id="num-reviews">{spot.numReviews} review</p>
+
+                    ) : (
+                        <p className="header-left" id="num-reviews">{spot.numReviews} reviews</p>
+                    )}
                     <p className="header-left">|</p>
                     <p className="header-left" id="location">{spot.city}, {spot.state}, {spot.country}</p>
                 </div>
@@ -101,7 +107,28 @@ export default function SpotPage() {
             <div className="spot-info">
                 <h2 className="owner-info">Hosted by {spot.Owner.firstName}</h2>
                 <p className="rooms-etc">{randomNum(2, 9)} guests | {randomNum(2, 9)} bedrooms | {randomNum(2, 9)} beds | {randomNum(2, 9)} baths</p>
+                <p className="spot-description">{spot.description}</p>
             </div>
+            {
+                spot.numReviews > 0 && (
+                    <div className="spot-page-review-container">
+                        <div className="spot-reviews-header">
+                            <h2 className="spot-reviews-star-rating"><i className="fa-solid fa-star" id="star"></i>{spot.avgStarRating}</h2>
+                            {spot.numReviews === 1 ? (
+                                <h2 className="spot-reviews-number">{spot.numReviews} review</h2>
+
+                            ) : (
+                                <h2 className="spot-reviews-number">{spot.numReviews} reviews</h2>
+                            )}
+                        </div>
+
+                        <div className="spot-reviews">
+                            <SpotReviews spot={spot} user={user} />
+                        </div>
+                    </div>
+
+                )
+            }
         </div>
     )
 }

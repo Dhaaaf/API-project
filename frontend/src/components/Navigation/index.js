@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 import OpenModalMenuItem from './OpenModalMenuItem';
-import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import CreateSpotForm from '../Spots/CreateSpot';
 
