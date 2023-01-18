@@ -2,12 +2,19 @@
 
 
 .fantasybnb-button {
-    background-color: rgb(227, 28, 95);
-    color: white;
+    background-color: white;
+    justify-content: left;
+    color: gray;
     font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
-    font-weight: bolder;
+    /* font-weight: bolder; */
     border: none;
     border-radius: 7px;
-    height: 3rem;
+    /* height: 3rem; */
     box-sizing: border-box;
+    cursor: pointer;
+    margin-bottom: 5px;
+}
+
+.fantasybnb-button:hover {
+    background-color: rgba(165, 165, 165, 0.1);
 }

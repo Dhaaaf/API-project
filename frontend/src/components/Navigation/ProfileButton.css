@@ -71,6 +71,7 @@
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
+    border-bottom: 2px solid rgba(165, 165, 165, 0.2);
 }
 
 
@@ -88,6 +89,7 @@
     font-family: inherit;
     padding: 10px;
     transition-property: all;
+    border-bottom: 2px solid rgba(165, 165, 165, 0.2);
 }
 
 #log-in-modal:hover {
@@ -105,15 +107,24 @@
     transition-property: all;
 }
 
+#profile-email {
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(165, 165, 165, 0.2);
+}
+
 #demo-user-button {
-    width: 100%;
-    height: 25px;
     margin-top: 5px;
-    background-color: rgb(227, 28, 95);
+    height: 25px;
+    width: 100%;
+    text-align: left;
+}
+
+#demo-user-button:hover {
+    background-color: rgba(165, 165, 165, 0.1);
 }
 
 #my-spots-button {
-    margin-top: 5px;
+    margin-top: 0;
     height: 25px;
 }
 
