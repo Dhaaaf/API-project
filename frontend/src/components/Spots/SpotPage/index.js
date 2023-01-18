@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkGetSingleSpot } from "../../../store/spots";
+import { thunkGetSpotReviews } from "../../../store/reviews";
 import EditSpotForm from "../EditSpot";
 import DeleteSpotForm from "../DeleteSpot";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
-import SpotReviews from "../../Reviews/SpotReviews";
 import CreateReview from "../../Reviews/CreateReview";
+import DeleteReviewForm from "../../Reviews/DeleteReview";
 
 
 import "./SpotPage.css"
@@ -21,12 +22,16 @@ export default function SpotPage() {
 
     useEffect(() => {
         dispatch(thunkGetSingleSpot(spotId))
-    }, [dispatch, user, reviews])
+        dispatch(thunkGetSpotReviews(spotId))
+    }, [dispatch, user, spot.numReviews])
 
 
     if (spot === {}) return null
     if (Object.values(spot).length === 0) return null
 
+    if (spot === undefined) return null;
+    if (user === undefined) return null;
+    if (reviews === undefined) return null;
 
     let owner
     if (user && spot) {
@@ -49,6 +54,7 @@ export default function SpotPage() {
         "https://media.npr.org/assets/img/2022/12/19/gettyimages-1450300260_custom-c5af9bcf4c0a466c8d8bf155c5917cc4ee5b1d62-s1100-c50.jpg",
     ];
 
+
     if (spot) {
         if (spot.SpotImages !== "No images listed") {
             for (let i = 0; i < spot.SpotImages.length; i++) {
@@ -59,6 +65,20 @@ export default function SpotPage() {
 
     function randomNum(min, max) {
         return Math.floor(Math.random() * (max - min) + min);
+    }
+
+
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
+
+    const convertDate = (date) => {
+        const month = monthNames[new Date(date).getMonth()];
+        const year = new Date(date).getFullYear();
+
+        return (
+            <p className="reviews-date">{month} {year}</p>
+        )
     }
 
 
@@ -148,7 +168,37 @@ export default function SpotPage() {
                         </div>
 
                         <div className="spot-reviews">
-                            <SpotReviews user={user} />
+                            {reviews && (
+                                <div>
+                                    {spot.numReviews === 0 ? (
+                                        <div className="spots-review-div">No reviews for this spot yet!</div>
+                                    ) : (
+                                        <div className="spots-review-div">
+                                            {Object.values(reviews).map((review) => (
+                                                review.User && (
+                                                    <div key={review.id} className="review-spots-card">
+                                                        <div className="spots-review-card-top-div">
+                                                            <div className="spots-review-top-left">
+                                                                <p className="review-user-name">{review.User.firstName}</p>
+                                                                {convertDate(review.createdAt)}
+                                                            </div>
+                                                            {user && user.id === review.userId && (
+                                                                <div className="spots-review-top-right">
+                                                                    <OpenModalMenuItem
+                                                                        itemText="Delete"
+                                                                        modalComponent={<DeleteReviewForm review={review} />}
+                                                                    />
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                        <p className="review-spots-text">{review.review}</p>
+                                                    </div>
+                                                )
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
 
