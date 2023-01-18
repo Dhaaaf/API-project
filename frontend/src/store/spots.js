@@ -7,7 +7,8 @@ const GET_SINGLE_SPOT = 'spots/GET_SINGLE_SPOT'
 const ADD_SPOT = 'spots/ADD_SPOT'
 const EDIT_SPOT = 'spots/EDIT_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
-const ADD_IMAGE = "spots/addImage";
+const ADD_PREVIEW_IMAGE = "spots/addPreviewImage";
+const ADD_SPOT_IMAGE = "spots/addSpotImage"
 
 
 // Action creators
@@ -54,9 +55,18 @@ export const actionDeleteSpot = (spotId) => {
     }
 }
 
+export const actionAddPreviewImg = (spotId, url, preview) => {
+    return {
+        type: ADD_PREVIEW_IMAGE,
+        spotId,
+        url,
+        preview
+    }
+}
+
 export const actionAddSpotImg = (spotId, url, preview) => {
     return {
-        type: DELETE_SPOT,
+        type: ADD_SPOT_IMAGE,
         spotId,
         url,
         preview
@@ -140,6 +150,25 @@ export const thunkDeleteSpot = (spotId) => async (dispatch) => {
     }
 }
 
+export const thunkAddPreviewImg = (spotId, url, preview) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            url,
+            preview
+        })
+    })
+
+    if (res.ok) {
+        const { spotId, url, preview } = await (res.json());
+        dispatch(actionAddPreviewImg(+spotId, url, preview))
+        return spotId
+    }
+}
+
 export const thunkAddSpotImg = (spotId, url, preview) => async (dispatch) => {
     const res = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
@@ -154,7 +183,7 @@ export const thunkAddSpotImg = (spotId, url, preview) => async (dispatch) => {
 
     if (res.ok) {
         const { spotId, url, preview } = await (res.json());
-        dispatch(actionAddSpotImg(+spotId, url, preview))
+        dispatch(actionAddPreviewImg(+spotId, url, preview))
         return spotId
     }
 }
@@ -210,9 +239,15 @@ export default function spotReducer(state = initialState, action) {
             delete newState.spots[action.spotId]
             return newState
         }
-        case ADD_IMAGE: {
-            const newState = { ...state }
+        case ADD_PREVIEW_IMAGE: {
+            const newState = { ...initialState }
             newState.spots = { ...state.spots, [action.spotId.previewImage]: action.url }
+            return newState
+        }
+        case ADD_SPOT_IMAGE: {
+            const newState = { ...state }
+            newState.singleSpot = { ...state.singleSpot, [action.spotId.SpotImages]: [action.spotId.SpotImages].push(action.url) }
+            return newState
         }
         default:
             return state;
