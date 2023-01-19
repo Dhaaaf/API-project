@@ -24,6 +24,7 @@ export default function AllSpots() {
 
 
     const spots = [];
+    if (!allSpots) return null
     Object.values(allSpots).forEach(spot => spots.push(spot))
     if (!spots.length) return null
 
