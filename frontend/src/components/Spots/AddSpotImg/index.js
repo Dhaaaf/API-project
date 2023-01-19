@@ -51,7 +51,7 @@ export default function AddSpotImageForm(spot) {
                 <div className="entries">
                     <input
                         id="imgUrl"
-                        type="text"
+                        type="url"
                         value={imgUrl}
                         onChange={(e) => setImgURL(e.target.value)}
                         required
