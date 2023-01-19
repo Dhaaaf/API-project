@@ -28,6 +28,14 @@ export default function UsersSpots() {
 
 
     const spots = [];
+    console.log(allSpots)
+    if (!allSpots) {
+        return (
+            <div className="title">
+                You currently have no listed spots
+            </div>
+        )
+    }
     Object.values(allSpots).forEach(spot => spots.push(spot))
     if (!spots.length) return null
     console.log(spots)
@@ -44,6 +52,7 @@ export default function UsersSpots() {
         }
     }
 
+
     return (
         <div className="allSpots-div">
             {spots && (
@@ -59,7 +68,12 @@ export default function UsersSpots() {
                         <div className="spot-card-bottom">
                             <div className="spot-card-header">
                                 <p className="spot-location">{spot.city}, {spot.state}</p>
-                                <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgRating)}</p>
+                                {typeof spot.avgRating === "number" ? (
+                                    <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>   {rating(spot.avgRating).toFixed(1)}</p>
+                                ) : (
+                                    <p className="spot-rating"><i className="fa-solid fa-star" id="star"></i>   New</p>
+
+                                )}
                             </div>
                             <div className="spot-card-middle">
                                 <p className="spot-name">{spot.name}</p>

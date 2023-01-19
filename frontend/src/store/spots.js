@@ -200,9 +200,10 @@ const initialState = {
 
 const normalize = (spots) => {
     const data = {};
-
-    spots.Spots.forEach(spot => data[spot.id] = spot);
-    return data;
+    if (spots.Spots) {
+        spots.Spots.forEach(spot => data[spot.id] = spot);
+        return data;
+    }
 }
 
 
