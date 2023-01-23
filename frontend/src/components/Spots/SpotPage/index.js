@@ -21,11 +21,21 @@ export default function SpotPage() {
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = useSelector(state => state.reviews.spotReviews)
 
+    let owner
+    if (user && spot) {
+        spot.ownerId === +user.id ? owner = true : owner = false
+    }
+
+    console.log("user.id......", user.id)
+    console.log("user.......", user)
+    console.log("spot.ownerId.....", spot.ownerId)
+    console.log("spot......", spot)
+    console.log("owner.......", owner)
 
     useEffect(() => {
         dispatch(thunkGetSingleSpot(spotId))
         dispatch(thunkGetSpotReviews(spotId))
-    }, [dispatch, user, spot.numReviews])
+    }, [dispatch, user, spot.numReviews, owner, spotId])
 
 
     if (spot === {}) return null
@@ -34,11 +44,6 @@ export default function SpotPage() {
     if (spot === undefined) return null;
     if (user === undefined) return null;
     if (reviews === undefined) return null;
-
-    let owner
-    if (user && spot) {
-        spot.ownerId === user.id ? owner = true : owner = false
-    }
 
     const rating = (rating) => {
         if (typeof rating === "number") {

@@ -34,9 +34,8 @@ router.post(
             err.title = "Validation error"
             err.message = "User already exists";
             err.status = 403;
-            err.errors = {
-                "email": "User with that email already exists"
-            }
+            err.errors = ["User with that email already exists"]
+
             return next(err)
         }
 
@@ -44,9 +43,7 @@ router.post(
             err.title = "Validation error"
             err.message = "User already exists";
             err.status = 403;
-            err.errors = {
-                username: "User with that username already exists"
-            }
+            err.errors = ["User with that username already exists"]
             return next(err)
         }
 
@@ -57,19 +54,19 @@ router.post(
             err.errors = [];
 
             if (!email) {
-                err.errors.push({ email: "Invalid email" })
+                err.errors.push("Invalid email")
             }
 
             if (!username) {
-                err.errors.push({ email: "Invalid userName" })
+                err.errors.push("Invalid userName")
             }
 
             if (!firstName) {
-                err.errors.push({ email: "Invalid firstName" })
+                err.errors.push(["Invalid firstName"])
             }
 
             if (!lastName) {
-                err.errors.push({ email: "Invalid lastName" })
+                err.errors.push(["Invalid lastName"])
             }
 
             return next(err)
@@ -82,12 +79,12 @@ router.post(
 
         return res.json({
             'user': {
-                // user
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                username: user.username,
-                token: token,
+                user
+                // firstName: user.firstName,
+                // lastName: user.lastName,
+                // email: user.email,
+                // username: user.username,
+                // token: token,
             }
         })
     },
