@@ -54,7 +54,7 @@ export default function EditSpotForm(spot) {
             errors.push("Description length must be less than 50 characters.")
         }
 
-        if (price && price < 1) {
+        if (price && (price < 1 || price > 10000)) {
             errors.push("Price per night must be greater than 0.")
         }
 

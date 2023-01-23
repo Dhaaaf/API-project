@@ -261,6 +261,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     border-bottom: 1px solid rgba(165, 165, 165, 0.4);
+    overflow-wrap: break-word;
 }
 
 .review-spots-card {
