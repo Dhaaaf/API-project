@@ -26,11 +26,6 @@ export default function SpotPage() {
         spot.ownerId === +user.id ? owner = true : owner = false
     }
 
-    console.log("user.id......", user.id)
-    console.log("user.......", user)
-    console.log("spot.ownerId.....", spot.ownerId)
-    console.log("spot......", spot)
-    console.log("owner.......", owner)
 
     useEffect(() => {
         dispatch(thunkGetSingleSpot(spotId))
