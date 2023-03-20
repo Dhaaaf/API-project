@@ -77,6 +77,8 @@ router.put('/:bookingId', requireAuth, ifBookingExists, validateBooking, async (
     let bookingToEdit = await Booking.findByPk(bookingId);
 
     let err = {};
+    err.errors = [];
+    
     if (startDate <= new Date()) {
         err.title = "Can't start a booking in the past";
         err.status = 403;

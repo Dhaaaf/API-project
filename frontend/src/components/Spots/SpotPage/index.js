@@ -162,6 +162,14 @@ export default function SpotPage() {
                 <p className="rooms-etc">{randomNum(2, 9)} guests | {randomNum(2, 9)} bedrooms | {randomNum(2, 9)} beds | {randomNum(2, 9)} baths</p>
                 <p className="spot-description">{spot.description}</p>
             </div>
+
+
+
+
+
+
+
+
             <div className="spot-page-review-container">
                 <div className="spot-reviews-header">
                     <div className="spot-reviews-header-left">
@@ -191,6 +199,8 @@ export default function SpotPage() {
                         )
                     }
                 </div>
+
+                <div className="spot-reviews-bookings-container">
 
                 <div className="spot-reviews">
                     {reviews && (
@@ -230,6 +240,8 @@ export default function SpotPage() {
                         </div>
                     )}
                 </div>
+            </div>
+
             </div>
 
         </div>
