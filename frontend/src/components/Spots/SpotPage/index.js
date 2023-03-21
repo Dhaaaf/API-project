@@ -9,6 +9,7 @@ import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import CreateReview from "../../Reviews/CreateReview";
 import DeleteReviewForm from "../../Reviews/DeleteReview";
 import AddSpotImageForm from "../AddSpotImg";
+import CreateBookings from "../../Bookings/CreateBookings";
 
 
 import "./SpotPage.css"
@@ -246,7 +247,13 @@ export default function SpotPage() {
                         </div>
                     </div>
                     <div className="spot-info-right">
+                        {user ? (
+                            <div className="bookings-div">
+                                <CreateBookings/>
+                            </div>
+                        ): (
                         <div>Bookings here</div>
+                        )}
                     </div>
                 </div>
 

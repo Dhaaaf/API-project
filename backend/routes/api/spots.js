@@ -552,18 +552,17 @@ router.post('/:spotId/bookings', requireAuth, ifSpotExists, validateBooking, asy
 
         if ((bookedStartDate <= startDate) && bookedEndDate >= startDate) {
             err.errors = [
-                { startDate: "Start date conflicts with an existing booking" }
+                "Start date conflicts with an existing booking"
             ]
             return next(err);
         } else if (((bookedStartDate <= endDate) && (endDate <= bookedEndDate))) {
             err.errors = [
-                { endDate: "End date conflicts with an existing booking" }
+                "End date conflicts with an existing booking"
             ]
             return next(err);
         } else if ((bookedStartDate >= startDate) && (bookedEndDate <= endDate)) {
             err.errors = [
-                { startDate: "Start date conflicts with an existing booking" },
-                { endDate: "End date conflicts with an existing booking" }
+                "Start date and End date conflicts with an existing booking"
             ]
             return next(err);
         }

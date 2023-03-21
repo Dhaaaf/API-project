@@ -1,0 +1,198 @@
+.createBooking-container {
+    width: 88%;
+    top: 90px;
+    border: 1px solid #b0b0b0;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    margin-top: 20px;
+}
+
+.createBooking-header-container {
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.createBooking-header-container-left {
+    display: flex;
+    align-items: baseline;
+}
+
+.createBooking-header-container-right {
+    display: flex;
+}
+
+.createBooking-header-container-right > p {
+    font-size: 14px;
+}
+
+.createBooking-header-night {
+    font-size: 16px;
+    padding-left: 8px;
+}
+
+.createBooking-header {
+    font-size: 22px;
+}
+
+.createBooking-subheader {
+    font-size: 14px;
+}
+
+.createBooking-error-container {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul.createBooking-errors > li {
+    list-style-type: none;
+    font-size: 14px;
+    color: #ff385c;
+}
+
+.createBooking-form {
+    width: 100%;
+}
+
+.createBooking-main-container {
+    border: 1px solid #c4c4c4;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.createBooking-group {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    height: 48px;
+}
+
+.createBooking-form > .createBooking-group {
+    position: relative;
+}
+
+.createBooking-form > .createBooking-group > .startDate {
+    position: relative;
+}
+
+.createBooking-form > .createBooking-group > .endDate {
+    position: relative;
+}
+
+.startDate, .endDate {
+    width: 50%;
+}
+
+form.createBooking-form > div.createBooking-main-container > div.createBooking-group > div.startDate,
+form.createBooking-form > div.createBooking-main-container > div.createBooking-group > div.endDate {
+    position: relative;
+}
+
+form.createBooking-form > div.createBooking-main-container > div.createBooking-group > div.startDate > label,
+form.createBooking-form > div.createBooking-main-container > div.createBooking-group > div.endDate > label {
+    position: absolute;
+}
+
+.createBooking-group > .startDate > input:valid + label,
+.createBooking-group > .endDate > input:valid + label {
+    height: 48px;
+    align-items: center;
+    padding: 10px 0px 7px 10px;
+    left: 0px;
+    color: #222222;
+    transition: 0.2s ease-in-out;
+    font-size: 9px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+.startDate > input {
+    height: 48px;
+    width: 100%;
+    border: 0;
+    border-right: 1px solid #c4c4c4;
+    background: transparent;
+    padding: 8px;
+    padding-top: 18px;
+}
+
+.endDate > input {
+    height: 48px;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    padding: 8px;
+    padding-top: 18px;
+}
+
+.createBooking-button-container {
+    margin: 20px 0px 0px 0px;
+}
+
+.createBooking-submit {
+    height: 48px;
+    width: 100%;
+    background: linear-gradient(45deg, rgba(230,29,77,1) 0%, rgba(215,4,102,1) 100%);
+    border-radius: 8px;
+    border: none;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 16px;
+    padding: 0;
+}
+
+.createBooking-submit:hover {
+    background: radial-gradient(circle, rgba(230,29,77,1) 0%, rgba(215,4,102,1) 100%);
+}
+
+.createBooking-bottom-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+}
+
+.createBooking-small-text-no-charge {
+    font-size: 14px;
+    text-align: center;
+}
+
+.createBooking-charges-container {
+    width: 100%;
+}
+
+.createBooking-charge-group, .createBooking-charge-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0px 0px;
+}
+
+.createBooking-charge-total {
+    font-weight: bold;
+}
+
+.createBooking-divider {
+    width: 100%;
+    border-bottom: 1px solid #cccccc;
+    margin-top: 16px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    background: transparent;
+    cursor: pointer;
+    z-index: 1;
+}
