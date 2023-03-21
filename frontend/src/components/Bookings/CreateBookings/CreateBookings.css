@@ -44,7 +44,8 @@ ul.createBooking-errors > li {
     list-style-type: none;
     font-size: 14px;
     color: #ff385c;
-    margin-right: 40px;
+    margin-right: 25px;
+    padding-bottom: 10px;
 }
 
 .createBooking-form {
@@ -92,9 +93,8 @@ form.createBooking-form > div.createBooking-main-container > div.createBooking-g
 
 .createBooking-group > .startDate > input:valid + label,
 .createBooking-group > .endDate > input:valid + label {
-    height: 48px;
-    align-items: center;
-    padding: 10px 0px 7px 10px;
+    height: 20px;
+    align-items: left;
     left: 0px;
     color: #222222;
     transition: 0.2s ease-in-out;
@@ -102,26 +102,27 @@ form.createBooking-form > div.createBooking-main-container > div.createBooking-g
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
+    margin-left: 5px;
 }
 
 
 .startDate > input {
     height: 27px;
-    width: 100%;
+    width: 90%;
     border: 0;
     border-right: 1px solid #c4c4c4;
     background: transparent;
     padding: 8px;
-    padding-top: 18px;
+    padding-top: 14px;
 }
 
 .endDate > input {
-    height: 48px;
+    height: 27px;
     width: 100%;
     border: 0;
     background: transparent;
     padding: 8px;
-    padding-top: 18px;
+    padding-top: 14px;
 }
 
 .createBooking-button-container {
@@ -147,7 +148,7 @@ form.createBooking-form > div.createBooking-main-container > div.createBooking-g
 .createBooking-bottom-container {
     display: flex;
     flex-direction: column;
-    margin-top: 16px;
+    margin-top: 10px;
 }
 
 .createBooking-small-text-no-charge {
@@ -162,7 +163,7 @@ form.createBooking-form > div.createBooking-main-container > div.createBooking-g
 .createBooking-charge-group, .createBooking-charge-total {
     display: flex;
     justify-content: space-between;
-    padding: 16px 0px 0px;
+    padding: 5px 0px 0px;
 }
 
 .createBooking-charge-total {
