@@ -200,6 +200,9 @@
 
 .spot-info {
     border-bottom: 1px solid rgba(165, 165, 165, 0.4);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .spot-description {
@@ -209,7 +212,7 @@
 
 .spot-page-review-container {
     padding-top: 3px;
-    width: 65%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
@@ -265,7 +268,7 @@
 }
 
 .review-spots-card {
-    width: 100%;
+    width: 45%;
     margin-bottom: 10px;
     height: fit-content;
 }
@@ -333,4 +336,58 @@
 .review-spots-text {
     font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
     font-size: 18x;
+}
+
+.spot-info-left {
+    width: 60%;
+}
+
+.spot-info-right {
+    width: 35%;
+    border: 1px solid red;
+}
+
+.spotPage-offers {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+
+
+.spotPage-header,
+.spotPage-description,
+.spotPage-offers-header {
+    padding: 20px 0px;
+    width: calc(100% - 15px);
+}
+
+
+.spotPage-icon {
+    font-size: 20px;
+    width: 15px;
+}
+
+
+.spotPage-offers-header {
+    width: calc(100% - 15px);
+    border-top: 1px solid #dddddd;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.spotPage-offers-details {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.spotPage-offer-details-container {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: center;
+    width: calc(50% - 16px);
 }
