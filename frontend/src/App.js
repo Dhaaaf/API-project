@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import AllSpots from "./components/Spots/AllSpots";
 import UsersSpots from "./components/Spots/UsersSpots";
 import SpotPage from "./components/Spots/SpotPage";
+import UserBookings from "./components/Bookings/UserBookings";
 
 import "./index.css"
 
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route exact path="/spots/:spotId">
             <SpotPage />
+          </Route>
+          <Route exact path="/my-bookings">
+            <UserBookings />
           </Route>
         </Switch>
       )}

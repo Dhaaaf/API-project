@@ -17,7 +17,6 @@ export default function CreateBookings() {
         const month = `0${day.getMonth() + 1}`.slice(-2);
         const year = day.getFullYear();
     
-        // console.log("YYYY-MM-DD",`${year}-${month}-${date}`);
         return `${year}-${month}-${date}`;
     }
 
@@ -128,7 +127,7 @@ export default function CreateBookings() {
             <div className="createBooking-header-container">
                 <div className="createBooking-header-container-left">
                     <h1 className="createBooking-header">${Number(spot.price).toFixed(2)}</h1>
-                    <span className="createBooking-header-night">night</span>
+                    <span className="createBooking-header-night">/ night</span>
                 </div>
             </div>
             <div className="createBooking-error-container">
@@ -178,9 +177,6 @@ export default function CreateBookings() {
             </form>
 
             <div className="createBooking-bottom-container">
-                <p className="createBooking-small-text-no-charge">
-                    You won't be charged yet.
-                </p>
                 <div className="createBooking-charges-container">
                     <div className="createBooking-charges-groups">
                         <div className="createBooking-charge-group">

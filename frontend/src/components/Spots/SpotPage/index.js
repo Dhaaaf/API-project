@@ -273,18 +273,19 @@ export default function SpotPage() {
             
                                     <div className="spotPage-login-signup-buttons">
 
-                                            <div id="spot-sign-up-modal">
-                                                <OpenModalMenuItem
-                                                    itemText="Sign Up"
-                                                    onItemClick={closeMenu}
-                                                    modalComponent={<SignupFormModal />}
-                                                />
-                                            </div>
                                             <div id="spot-log-in-modal">
                                                 <OpenModalMenuItem
                                                     itemText="Log In"
                                                     onItemClick={closeMenu}
                                                     modalComponent={<LoginFormModal />}
+                                                />
+                                            </div>
+                                            
+                                            <div id="spot-sign-up-modal">
+                                                <OpenModalMenuItem
+                                                    itemText="Sign Up"
+                                                    onItemClick={closeMenu}
+                                                    modalComponent={<SignupFormModal />}
                                                 />
                                             </div>
                                     </div>
