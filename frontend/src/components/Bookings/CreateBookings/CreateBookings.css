@@ -5,28 +5,18 @@
     padding: 18px;
     border-radius: 12px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .createBooking-header-container {
     display: flex;
     flex-flow: row wrap;
     width: 100%;
-    justify-content: space-between;
-    align-items: baseline;
 }
 
 .createBooking-header-container-left {
     display: flex;
     align-items: baseline;
-}
-
-.createBooking-header-container-right {
-    display: flex;
-}
-
-.createBooking-header-container-right > p {
-    font-size: 14px;
 }
 
 .createBooking-header-night {
@@ -54,6 +44,7 @@ ul.createBooking-errors > li {
     list-style-type: none;
     font-size: 14px;
     color: #ff385c;
+    margin-right: 40px;
 }
 
 .createBooking-form {
@@ -115,7 +106,7 @@ form.createBooking-form > div.createBooking-main-container > div.createBooking-g
 
 
 .startDate > input {
-    height: 48px;
+    height: 27px;
     width: 100%;
     border: 0;
     border-right: 1px solid #c4c4c4;
