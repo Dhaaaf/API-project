@@ -132,7 +132,7 @@ form.createBooking-form > div.createBooking-main-container > div.createBooking-g
 .createBooking-submit {
     height: 48px;
     width: 100%;
-    background: linear-gradient(45deg, rgba(230,29,77,1) 0%, rgba(215,4,102,1) 100%);
+    background-color: rgb(227, 28, 95);
     border-radius: 8px;
     border: none;
     color: #ffffff;
@@ -142,7 +142,8 @@ form.createBooking-form > div.createBooking-main-container > div.createBooking-g
 }
 
 .createBooking-submit:hover {
-    background: radial-gradient(circle, rgba(230,29,77,1) 0%, rgba(215,4,102,1) 100%);
+    background-color: rgb(227, 28, 95);
+    cursor: pointer;
 }
 
 .createBooking-bottom-container {

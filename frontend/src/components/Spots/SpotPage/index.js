@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkGetSingleSpot, thunkAddSpotImg } from "../../../store/spots";
@@ -10,6 +10,8 @@ import CreateReview from "../../Reviews/CreateReview";
 import DeleteReviewForm from "../../Reviews/DeleteReview";
 import AddSpotImageForm from "../AddSpotImg";
 import CreateBookings from "../../Bookings/CreateBookings";
+import SignupFormModal from '../../SignupFormModal';
+import LoginFormModal from "../../LoginFormModal";
 
 
 import "./SpotPage.css"
@@ -21,6 +23,8 @@ export default function SpotPage() {
     const user = useSelector(state => state.session.user)
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = useSelector(state => state.reviews.spotReviews)
+    const [showMenu, setShowMenu] = useState(false);
+
 
     let owner
     if (user && spot) {
@@ -99,6 +103,15 @@ export default function SpotPage() {
         }
 
     }
+
+
+    const openMenu = () => {
+        if (showMenu) return;
+        setShowMenu(true);
+    };
+
+    const closeMenu = () => setShowMenu(false);
+
 
 
 
@@ -252,7 +265,31 @@ export default function SpotPage() {
                                 <CreateBookings/>
                             </div>
                         ): (
-                        <div>Bookings here</div>
+                            <div className="bookings-div">
+                                <div className="spotPage-login-signup">
+                                    <h2 className="spotPage-login-signup-header">
+                                        Log in or Sign up to make a booking!
+                                    </h2>
+            
+                                    <div className="spotPage-login-signup-buttons">
+
+                                            <div id="spot-sign-up-modal">
+                                                <OpenModalMenuItem
+                                                    itemText="Sign Up"
+                                                    onItemClick={closeMenu}
+                                                    modalComponent={<SignupFormModal />}
+                                                />
+                                            </div>
+                                            <div id="spot-log-in-modal">
+                                                <OpenModalMenuItem
+                                                    itemText="Log In"
+                                                    onItemClick={closeMenu}
+                                                    modalComponent={<LoginFormModal />}
+                                                />
+                                            </div>
+                                    </div>
+                                </div>
+                        </div>
                         )}
                     </div>
                 </div>
