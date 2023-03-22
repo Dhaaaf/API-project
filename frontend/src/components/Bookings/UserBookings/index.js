@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { thunkGetUserBookings } from "../../../store/bookings";
 import "./UserBookings.css";
 import { thunkGetAllSpots } from "../../../store/spots";
+import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 
 export default function UserBookings() {
     const dispatch = useDispatch();
@@ -68,7 +69,11 @@ export default function UserBookings() {
                         <div className="booking-spot-address">{booking.Spot.address}</div>
                         <div className="booking-spot-city-country">{booking.Spot.city}, {booking.Spot.country}</div>
                         <div className="booking-start">From: {reformatDateString(booking.startDate.slice(0, 10))}</div>
-                        <div className="booking-end">To: {reformatDateString(booking.endDate.slice(0,10))}</div>                        
+                        <div className="booking-end">To: {reformatDateString(booking.endDate.slice(0,10))}</div>    
+                        <div className="booking-buttons">
+                            <div className="edit-booking">Edit</div>
+                            <div className="delete-booking">Delete</div>
+                        </div>                    
                     </div>
                     <div className="booking-card-right">
                         {allSpots[booking.Spot.id].previewImage === "No preview image available" ? (

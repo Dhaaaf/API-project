@@ -395,7 +395,7 @@
 
 .spotPage-login-signup {
     margin-top: 30px;
-    width: 100%;
+    width: 88%;
     top: 90px;
     border: 1px solid #b0b0b0;
     padding: 24px;
@@ -436,4 +436,8 @@
     padding-top: 15px;
     padding-bottom: 15px;
     cursor: pointer;
+}
+
+.bookings-div {
+    width: 400px;
 }

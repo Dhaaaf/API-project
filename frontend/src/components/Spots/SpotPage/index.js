@@ -88,12 +88,9 @@ export default function SpotPage() {
         )
     }
 
-    // console.log("reviews......", Object.values(reviews))
     let noUserReview = true;
 
     if (reviews) {
-        console.log("user.....", user)
-        console.log("reviews.....", reviews)
         const reviewArr = Object.values(reviews)
 
         if (user) {
@@ -111,8 +108,6 @@ export default function SpotPage() {
     };
 
     const closeMenu = () => setShowMenu(false);
-
-
 
 
     return spot && (
@@ -261,8 +256,21 @@ export default function SpotPage() {
                     </div>
                     <div className="spot-info-right">
                         {user ? (
-                            <div className="bookings-div">
-                                <CreateBookings/>
+                            <div>
+                                {owner === false ? (
+                                <div className="bookings-div">
+                                    <CreateBookings/>
+                                </div>
+                                ):(
+                                    <div className="bookings-div">
+                                        <div className="spotPage-login-signup">
+                                        <h2 className="spotPage-login-signup-header">
+                                            You own this spot!
+                                        </h2>
+                                    </div>
+                            </div>
+                                )}
+
                             </div>
                         ): (
                             <div className="bookings-div">
@@ -280,7 +288,7 @@ export default function SpotPage() {
                                                     modalComponent={<LoginFormModal />}
                                                 />
                                             </div>
-                                            
+
                                             <div id="spot-sign-up-modal">
                                                 <OpenModalMenuItem
                                                     itemText="Sign Up"
@@ -290,7 +298,7 @@ export default function SpotPage() {
                                             </div>
                                     </div>
                                 </div>
-                        </div>
+                            </div>
                         )}
                     </div>
                 </div>
