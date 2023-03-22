@@ -71,7 +71,7 @@ export default function UserBookings() {
                         <div className="booking-start">From: {reformatDateString(booking.startDate.slice(0, 10))}</div>
                         <div className="booking-end">To: {reformatDateString(booking.endDate.slice(0,10))}</div>    
                         <div className="booking-buttons">
-                            <div className="edit-booking">Edit</div>
+                            {/* <div className="edit-booking">Edit</div> */}
                             <div className="delete-booking">Delete</div>
                         </div>                    
                     </div>
