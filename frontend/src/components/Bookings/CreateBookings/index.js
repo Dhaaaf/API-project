@@ -84,7 +84,7 @@ export default function CreateBookings() {
 
         if (makeNewBooking) {
             dispatch(thunkGetUserBookings(user.id))
-            // history.push(`/my-trips`)
+            history.push(`/my-bookings`)
         }
     }
 
