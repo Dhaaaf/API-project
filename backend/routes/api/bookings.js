@@ -77,6 +77,8 @@ router.put('/:bookingId', requireAuth, ifBookingExists, validateBooking, async (
     let bookingToEdit = await Booking.findByPk(bookingId);
 
     let err = {};
+    err.errors = [];
+    
     if (startDate <= new Date()) {
         err.title = "Can't start a booking in the past";
         err.status = 403;
@@ -128,18 +130,17 @@ router.put('/:bookingId', requireAuth, ifBookingExists, validateBooking, async (
 
             if ((bookedStartDate <= startDate) && bookedEndDate >= startDate) {
                 err.errors = [
-                    { startDate: "Start date conflicts with an existing booking" }
+                    "Start date conflicts with an existing booking"
                 ]
                 return next(err);
             } else if (((bookedStartDate <= endDate) && (endDate <= bookedEndDate))) {
                 err.errors = [
-                    { endDate: "End date conflicts with an existing booking" }
+                    "End date conflicts with an existing booking"
                 ]
                 return next(err);
             } else if ((bookedStartDate >= startDate) && (bookedEndDate <= endDate)) {
                 err.errors = [
-                    { startDate: "Start date conflicts with an existing booking" },
-                    { endDate: "End date conflicts with an existing booking" }
+                    "Start date and End date conflicts with an existing booking"
                 ]
                 return next(err);
             }

@@ -200,6 +200,9 @@
 
 .spot-info {
     border-bottom: 1px solid rgba(165, 165, 165, 0.4);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .spot-description {
@@ -333,4 +336,104 @@
 .review-spots-text {
     font-family: 'Circular', 'BlinkMacSystemFont', 'Roboto', 'Helvetica Neue', sans-serif;
     font-size: 18x;
+}
+
+.spot-info-left {
+    width: 60%;
+}
+
+.spot-info-right {
+    width: 35%;
+}
+
+.spotPage-offers {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+
+
+.spotPage-header,
+.spotPage-description,
+.spotPage-offers-header {
+    padding: 20px 0px;
+    width: calc(100% - 15px);
+}
+
+
+.spotPage-icon {
+    font-size: 20px;
+    width: 15px;
+}
+
+
+.spotPage-offers-header {
+    width: calc(100% - 15px);
+    border-top: 1px solid #dddddd;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.spotPage-offers-details {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.spotPage-offer-details-container {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    align-items: center;
+    width: calc(50% - 16px);
+}
+
+
+
+.spotPage-login-signup {
+    margin-top: 30px;
+    width: 100%;
+    top: 90px;
+    border: 1px solid #b0b0b0;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    z-index: 0;
+}
+
+.spotPage-login-signup-header {
+    font-size: 20px;
+    margin-bottom: 18px;
+    margin-left: 10px;
+}
+
+.spotPage-small-text {
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+.spotPage-login-signup-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    cursor: pointer;
+}
+
+#spot-log-in-modal,
+#spot-sign-up-modal {
+    background-color: rgb(227, 28, 95);
+    color: white;
+    list-style: none;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    cursor: pointer;
 }

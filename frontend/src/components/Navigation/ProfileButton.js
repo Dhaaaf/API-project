@@ -47,6 +47,12 @@ function ProfileButton({ user }) {
         closeMenu();
     }
 
+    const myBookings = (e) => {
+        e.preventDefault();
+        history.push('/my-bookings')
+        closeMenu();
+    }
+
     const demoSignIn = (e) => {
         e.preventDefault();
         const password = "password"
@@ -73,6 +79,7 @@ function ProfileButton({ user }) {
                         <p>{user.firstName} {user.lastName}</p>
                         <p id="profile-email">{user.email}</p>
                         <button onClick={mySpots} className='fantasybnb-button' id="my-spots-button">My Spots</button>
+                        <button onClick={myBookings} className='fantasybnb-button' id="my-spots-button">My Bookings</button>
                         <button onClick={logout} className='fantasybnb-button' id='logout-button'>Log Out</button>
                     </div>
 

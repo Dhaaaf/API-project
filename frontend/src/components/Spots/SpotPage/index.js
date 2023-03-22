@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { thunkGetSingleSpot, thunkAddSpotImg } from "../../../store/spots";
@@ -9,6 +9,9 @@ import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
 import CreateReview from "../../Reviews/CreateReview";
 import DeleteReviewForm from "../../Reviews/DeleteReview";
 import AddSpotImageForm from "../AddSpotImg";
+import CreateBookings from "../../Bookings/CreateBookings";
+import SignupFormModal from '../../SignupFormModal';
+import LoginFormModal from "../../LoginFormModal";
 
 
 import "./SpotPage.css"
@@ -20,6 +23,8 @@ export default function SpotPage() {
     const user = useSelector(state => state.session.user)
     const spot = useSelector(state => state.spots.singleSpot)
     const reviews = useSelector(state => state.reviews.spotReviews)
+    const [showMenu, setShowMenu] = useState(false);
+
 
     let owner
     if (user && spot) {
@@ -100,6 +105,15 @@ export default function SpotPage() {
     }
 
 
+    const openMenu = () => {
+        if (showMenu) return;
+        setShowMenu(true);
+    };
+
+    const closeMenu = () => setShowMenu(false);
+
+
+
 
     return spot && (
         <div className="spotPage-div">
@@ -158,10 +172,137 @@ export default function SpotPage() {
                 </div>
             </div>
             <div className="spot-info">
-                <h2 className="owner-info">Hosted by {spot.Owner.firstName}</h2>
-                <p className="rooms-etc">{randomNum(2, 9)} guests | {randomNum(2, 9)} bedrooms | {randomNum(2, 9)} beds | {randomNum(2, 9)} baths</p>
-                <p className="spot-description">{spot.description}</p>
-            </div>
+                <div className="spot-info-left">
+                    <h2 className="owner-info">Hosted by {spot.Owner.firstName}</h2>
+                    <p className="rooms-etc">{randomNum(2, 9)} guests | {randomNum(2, 9)} bedrooms | {randomNum(2, 9)} beds | {randomNum(2, 9)} baths</p>
+                    <p className="spot-description">{spot.description}</p>
+
+                        <div className="spotPage-offers-header">
+                            <h2 className="spotPage-offers">What this place offers</h2>
+
+
+                            <div className="spotPage-offers-details">
+                                <div className="spotPage-offer-details-container">
+                                    <div className="spotPage-icon">
+                                        <i className="fa-solid fa-mountain-sun spot-icon"></i>
+                                    </div>
+                                    <div className="spotPage-offer-details-main">
+                                        <p className="spotPage-offer-details-header">Mountain view</p>
+                                    </div>
+                                </div>
+
+
+                                <div className="spotPage-offer-details-container">
+                                    <div className="spotPage-icon">
+                                        <i className="fa-solid fa-kitchen-set spot-icon"></i>
+                                    </div>
+                                    <div className="spotPage-offer-details-main">
+                                        <p className="spotPage-offer-details-header">Kitchen</p>
+                                    </div>
+                                </div>
+
+                                <div className="spotPage-offer-details-container">
+                                    <div className="spotPage-icon">
+                                        <i className="fa-solid fa-car spot-icon"></i>
+                                    </div>
+                                    <div className="spotPage-offer-details-main">
+                                        <p className="spotPage-offer-details-header">Free parking on premises</p>
+                                    </div>
+                                </div>
+
+                                <div className="spotPage-offer-details-container">
+                                    <div className="spotPage-icon">
+                                        <i className="fa-solid fa-suitcase spot-icon"></i>
+                                    </div>
+                                    <div className="spotPage-offer-details-main">
+                                        <p className="spotPage-offer-details-header">Luggage dropoff allowed</p>
+                                    </div>
+                                </div>
+
+                                <div className="spotPage-offer-details-container">
+                                    <div className="spotPage-icon">
+                                        <i className="fa-solid fa-wifi spot-icon"></i>
+                                    </div>
+                                    <div className="spotPage-offer-details-main">
+                                        <p className="spotPage-offer-details-header">Wifi</p>
+                                    </div>
+                                </div>
+
+                                <div className="spotPage-offer-details-container">
+                                    <div className="spotPage-icon">
+                                        <i className="fa-solid fa-charging-station spot-icon"></i>
+                                    </div>
+                                    <div className="spotPage-offer-details-main">
+                                        <p className="spotPage-offer-details-header">EV charger</p>
+                                    </div>
+                                </div>
+
+
+                                <div className="spotPage-offer-details-container">
+                                    <div className="spotPage-icon">
+                                        <i className="fa-regular fa-snowflake spot-icon"></i>
+                                    </div>
+                                    <div className="spotPage-offer-details-main">
+                                        <p className="spotPage-offer-details-header">Air conditioning</p>
+                                    </div>
+                                </div>
+
+                                <div className="spotPage-offer-details-container">
+                                    <div className="spotPage-icon">
+                                        <i className="fa-solid fa-mattress-pillow spot-icon"></i>
+                                    </div>
+                                    <div className="spotPage-offer-details-main">
+                                        <p className="spotPage-offer-details-header">Extra pillows and blankets</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="spot-info-right">
+                        {user ? (
+                            <div className="bookings-div">
+                                <CreateBookings/>
+                            </div>
+                        ): (
+                            <div className="bookings-div">
+                                <div className="spotPage-login-signup">
+                                    <h2 className="spotPage-login-signup-header">
+                                        Log in or Sign up to make a booking!
+                                    </h2>
+            
+                                    <div className="spotPage-login-signup-buttons">
+
+                                            <div id="spot-log-in-modal">
+                                                <OpenModalMenuItem
+                                                    itemText="Log In"
+                                                    onItemClick={closeMenu}
+                                                    modalComponent={<LoginFormModal />}
+                                                />
+                                            </div>
+                                            
+                                            <div id="spot-sign-up-modal">
+                                                <OpenModalMenuItem
+                                                    itemText="Sign Up"
+                                                    onItemClick={closeMenu}
+                                                    modalComponent={<SignupFormModal />}
+                                                />
+                                            </div>
+                                    </div>
+                                </div>
+                        </div>
+                        )}
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
             <div className="spot-page-review-container">
                 <div className="spot-reviews-header">
                     <div className="spot-reviews-header-left">
@@ -192,44 +333,47 @@ export default function SpotPage() {
                     }
                 </div>
 
-                <div className="spot-reviews">
-                    {reviews && (
-                        <div>
-                            {spot.numReviews === 0 ? (
-                                <div className="spots-review-div">No reviews for this spot yet!</div>
-                            ) : (
-                                <div className="spots-review-div">
-                                    {Object.values(reviews).map((review) => (
-                                        review.User && (
-                                            <div key={review.id} className="review-spots-card">
-                                                <div className="spots-review-card-top-div">
-                                                    <div className="spots-review-top-left">
-                                                        <i class="fa-solid fa-user" id="user-logo-review"></i>
-                                                        <div className="review-name-date">
-                                                            <p className="review-user-name">{review.User.firstName}</p>
-                                                            <p className="review-date">{convertDate(review.createdAt)}</p>
+                <div className="spot-reviews-bookings-container">
+                    <div className="spot-reviews">
+                        {reviews && (
+                            <div>
+                                {spot.numReviews === 0 ? (
+                                    <div className="spots-review-div">No reviews for this spot yet!</div>
+                                ) : (
+                                    <div className="spots-review-div">
+                                        {Object.values(reviews).map((review) => (
+                                            review.User && (
+                                                <div key={review.id} className="review-spots-card">
+                                                    <div className="spots-review-card-top-div">
+                                                        <div className="spots-review-top-left">
+                                                            <i class="fa-solid fa-user" id="user-logo-review"></i>
+                                                            <div className="review-name-date">
+                                                                <p className="review-user-name">{review.User.firstName}</p>
+                                                                <p className="review-date">{convertDate(review.createdAt)}</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    {user && user.id === review.userId && (
-                                                        <div className="spots-review-top-right">
-                                                            <i className="fa-solid fa-square-minus"></i>
+                                                        {user && user.id === review.userId && (
+                                                            <div className="spots-review-top-right">
+                                                                <i className="fa-solid fa-square-minus"></i>
 
-                                                            <OpenModalMenuItem
-                                                                itemText="Delete"
-                                                                modalComponent={<DeleteReviewForm review={review} />}
-                                                            />
-                                                        </div>
-                                                    )}
+                                                                <OpenModalMenuItem
+                                                                    itemText="Delete"
+                                                                    modalComponent={<DeleteReviewForm review={review} />}
+                                                                />
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                    <p className="review-spots-text">{review.review}</p>
                                                 </div>
-                                                <p className="review-spots-text">{review.review}</p>
-                                            </div>
-                                        )
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    )}
+                                            )
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
+
             </div>
 
         </div>
