@@ -1,22 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { thunkGetUserBookings } from "../../../store/bookings";
 import "./UserBookings.css";
 import { thunkGetAllSpots } from "../../../store/spots";
 import OpenModalMenuItem from "../../Navigation/OpenModalMenuItem";
+import DeleteBookingForm from "../DeleteBooking";
 
 export default function UserBookings() {
     const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const bookings = useSelector(state => state.bookings.user);
     const allSpots = useSelector(state => state.spots.spots);
-
+    const [showMenu, setShowMenu] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false)
+    
 
 
     useEffect(() => {
         dispatch(thunkGetUserBookings(user.id));
         dispatch(thunkGetAllSpots());
-    }, [dispatch])
+        setIsLoaded(true)
+    }, [dispatch, isLoaded])
 
     if (!user) return null;
 
@@ -40,10 +44,6 @@ export default function UserBookings() {
 
     if (!bookingsArray) return null;
 
-    console.log(bookingsArray)
-
-    if (!allSpots) return null;
-
 
 
 
@@ -59,7 +59,19 @@ export default function UserBookings() {
         return reformattedDate;
     }
 
-    return bookings && (
+
+    const openMenu = () => {
+        if (showMenu) return;
+        setShowMenu(true);
+    };
+
+    const closeMenu = () => setShowMenu(false);
+
+    let spots = Object.values(allSpots)
+
+    if (spots.length === 0) return null
+
+    return bookings && allSpots && (
         <div className="userBookings-container">
             <h1 className="userBookings-trips">Your Trips</h1>
             {bookings && bookingsArray.map(booking => (
@@ -72,7 +84,14 @@ export default function UserBookings() {
                         <div className="booking-end">To: {reformatDateString(booking.endDate.slice(0,10))}</div>    
                         <div className="booking-buttons">
                             {/* <div className="edit-booking">Edit</div> */}
-                            <div className="delete-booking">Delete</div>
+
+                            <div className="delete-booking">
+                            <OpenModalMenuItem
+                            itemText="Delete"
+                            onItemClick={closeMenu}
+                            modalComponent={< DeleteBookingForm bookingId={booking.id} isLoaded={isLoaded} setIsLoaded={setIsLoaded}/>}
+                            />
+                            </div>
                         </div>                    
                     </div>
                     <div className="booking-card-right">

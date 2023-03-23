@@ -90,3 +90,7 @@ input:focus {
 #leave-review-button {
     margin-top: 15px;
 }
+
+#deleteBooking-button {
+    cursor: pointer;
+}

@@ -62,6 +62,20 @@
     margin-top: 20px;
 }
 
+.delete-booking {
+    list-style: none;
+    border: 1px solid red;
+    width: 40%;
+    height: 30px;
+    text-align: center;
+    align-items: center;
+    padding-top: 10px;
+    border-radius: 5px;
+    background-color: rgb(227, 28, 95);
+    color: white;
+    cursor: pointer;
+}
+
 
 
 

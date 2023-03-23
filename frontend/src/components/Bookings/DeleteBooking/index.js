@@ -1,31 +1,36 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { thunkDeleteReview } from "../../../store/reviews";
 import { useModal } from "../../../context/Modal";
 import { thunkDeleteBooking } from "../../../store/bookings";
+import { useHistory } from "react-router-dom";
 import "./DeleteBooking.css"
 
-export default function DeleteReviewForm(booking) {
+export default function DeleteBookingForm({bookingId, isLoaded, setIsLoaded}) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
+    const history = useHistory()
 
-    review = review.review
 
     const [errors, setErrors] = useState([]);
 
 
     const goBack = (e) => {
         e.preventDefault();
-
         closeModal();
     }
 
     const submitDelete = async (e) => {
         e.preventDefault()
-
-        
+        const deleteBooking = await dispatch(thunkDeleteBooking(bookingId))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            })
+        setIsLoaded(false)
         closeModal();
     }
+
+    
 
     return (
         <div className="form-div">
@@ -38,7 +43,7 @@ export default function DeleteReviewForm(booking) {
             <form
                 className="form"
             >
-                <button type="submit" className="submit-button" id="deleteSpot-button" onClick={submitDelete}>Yes Delete This Review</button>
+                <button type="submit" className="submit-button" id="deleteBooking-button" onClick={submitDelete}>Yes Delete This Booking</button>
             </form>
         </div>
     )
