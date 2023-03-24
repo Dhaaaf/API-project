@@ -50,6 +50,7 @@ export default function AllSpots() {
                             <img
                                 className="spot-previewimg"
                                 src={preview(spot.previewImage)}
+                                onError={e => { e.currentTarget.src = "https://i.pinimg.com/originals/81/45/ef/8145efce2fec5157c6700e46ba14abb0.jpg"; }}
                                 onClick={() => onClick(spot.id)}
                             />
                         </div>

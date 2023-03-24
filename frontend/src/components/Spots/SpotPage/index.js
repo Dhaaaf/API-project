@@ -158,12 +158,12 @@ export default function SpotPage() {
                 )}
             </div>
             <div className="img-div">
-                <img className="big-picture" src={images[0]} />
+                <img className="big-picture" src={images[0]} onError={e => { e.currentTarget.src = "https://i.pinimg.com/originals/81/45/ef/8145efce2fec5157c6700e46ba14abb0.jpg"; }} />
                 <div className="small-pictures-div">
-                    <img className="small-picture" id="pic-1" src={images[1]} />
-                    <img className="small-picture" id="pic-2" src={images[2]} />
-                    <img className="small-picture" id="pic-3" src={images[3]} />
-                    <img className="small-picture" id="pic-4" src={images[4]} />
+                    <img className="small-picture" id="pic-1" src={images[1]} onError={e => { e.currentTarget.src = "https://i.pinimg.com/originals/81/45/ef/8145efce2fec5157c6700e46ba14abb0.jpg"; }} />
+                    <img className="small-picture" id="pic-2" src={images[2]} onError={e => { e.currentTarget.src = "https://i.pinimg.com/originals/81/45/ef/8145efce2fec5157c6700e46ba14abb0.jpg"; }} />
+                    <img className="small-picture" id="pic-3" src={images[3]} onError={e => { e.currentTarget.src = "https://i.pinimg.com/originals/81/45/ef/8145efce2fec5157c6700e46ba14abb0.jpg"; }} />
+                    <img className="small-picture" id="pic-4" src={images[4]} onError={e => { e.currentTarget.src = "https://i.pinimg.com/originals/81/45/ef/8145efce2fec5157c6700e46ba14abb0.jpg"; }} />
                 </div>
             </div>
             <div className="spot-info">
