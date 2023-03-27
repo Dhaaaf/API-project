@@ -7,6 +7,7 @@ const ADD_REVIEW = 'spot/ADD_REVIEW'
 const EDIT_REVIEW = 'review/EDIT_REVIEW'
 const DELETE_REVIEW = 'review/DELETE_REVIEW'
 const ADD_REVIEW_IMAGE = 'review/ADD_IMAGE'
+const RESET_REVIEWS = 'review/RESET_REVIEWS'
 
 
 // Action creators
@@ -45,6 +46,12 @@ export const actionDeleteReview = (reviewId) => {
     return {
         type: DELETE_REVIEW,
         reviewId
+    }
+}
+
+export const actionResetReviews = () => {
+    return {
+        type: RESET_REVIEWS
     }
 }
 

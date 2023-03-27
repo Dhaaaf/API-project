@@ -9,6 +9,7 @@ const EDIT_SPOT = 'spots/EDIT_SPOT'
 const DELETE_SPOT = 'spots/DELETE_SPOT'
 const ADD_PREVIEW_IMAGE = "spots/addPreviewImage";
 const ADD_SPOT_IMAGE = "spots/addSpotImage"
+const RESET_SINGLE_SPOT = "spots/RESET_SIGLE_SPOT"
 
 
 // Action creators
@@ -72,6 +73,11 @@ export const actionAddSpotImg = (spotId, url, preview) => {
         preview
     }
 }
+
+// RESET
+export const actionResetSingleSpot = () => ({
+	type: RESET_SINGLE_SPOT,
+});
 
 
 
@@ -248,6 +254,10 @@ export default function spotReducer(state = initialState, action) {
         case ADD_SPOT_IMAGE: {
             const newState = { ...state }
             newState.singleSpot = { ...state.singleSpot, [action.spotId.SpotImages]: [action.spotId.SpotImages].push(action.url) }
+            return newState
+        }
+        case RESET_SINGLE_SPOT: {
+            const newState = {...state}
             return newState
         }
         default:

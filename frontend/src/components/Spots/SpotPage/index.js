@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { thunkGetSingleSpot, thunkAddSpotImg } from "../../../store/spots";
+import { thunkGetSingleSpot, thunkAddSpotImg, actionResetSingleSpot } from "../../../store/spots";
 import { thunkGetSpotReviews } from "../../../store/reviews";
 import EditSpotForm from "../EditSpot";
 import DeleteSpotForm from "../DeleteSpot";
@@ -35,6 +35,11 @@ export default function SpotPage() {
     useEffect(() => {
         dispatch(thunkGetSingleSpot(spotId))
         dispatch(thunkGetSpotReviews(spotId))
+
+        return () => {
+			dispatch(actionResetSingleSpot());
+		};
+
     }, [dispatch, user, spot.numReviews, owner, spotId])
 
 
